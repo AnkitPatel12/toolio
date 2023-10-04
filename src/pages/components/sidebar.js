@@ -27,6 +27,7 @@ import {
   CubeTransparentIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import Logo from "./logo";
  
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
@@ -38,11 +39,8 @@ export function SidebarWithSearch() {
  
   return (
     <Card className="h-[calc(100vh)] w-full max-w-[16rem] p-4 shadow-none rounded-none bg-[var(--app-container)]">
-      <div className="mb-2 flex items-center gap-4 p-4">
-        <CubeTransparentIcon className="h-7 w-7" />
-        <Typography variant="h5" color="blue-gray">
-          Toolio
-        </Typography>
+      <div className="p-4">
+        <Logo />
       </div>
       <div className="p-2">
         <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search"/>
