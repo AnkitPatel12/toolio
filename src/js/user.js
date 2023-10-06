@@ -1,24 +1,35 @@
+import { pick } from "lodash";
+
 class User {
-    constructor(username, hashedPassword, isAdmin) {
-        this.username = username;
-        this.hashedPassword = hashedPassword;
+    constructor(name, email, password, isAdmin) {
+        this.name = name;
+        this.password = password;
         this.isAdmin = isAdmin;
+        this.email = email;
+    }
+
+    getEmail() {
+        return this.email;
+    }
+
+    setEmail() {
+        this.email = email;
     }
 
     getUsername() {
-        return this.username;
+        return this.name;
     }
 
-    setUsername(username) {
-        this.username = username;
+    setUsername(name) {
+        this.name = name;
     }
 
     getHashedPassword() {
-        return this.hashedPassword;
+        return this.password;
     }
 
-    setHashedPassword(hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    setHashedPassword(password) {
+        this.password = password;
     }
 
     isAdmin() {
@@ -30,8 +41,13 @@ class User {
     }
 
     toString() {
-        return `User{ username: '${this.username}', isAdmin: ${this.isAdmin} }`;
+        return `User{ username: '${this.name}', isAdmin: ${this.isAdmin} }`;
     }
+
+    toJSON() {
+        return pick(this, ["name", "email", "password", "isAdmin"]);
+    }
+
 }
 
 module.exports = User;

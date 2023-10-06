@@ -1,6 +1,17 @@
-export default function handler(req, res) {
-    res.status(200).json({ name: 'USER' })
-}
+import User from "@/js/user";
+import clientPromise from "@/js/mongodb";
+
+export default async function handler(req, res) {
+    const client = await clientPromise;
+    let formData = JSON.parse(req.body)
+    let user = new User(formData.name, formData.email, formData.password, false)
+    let db = client.db("toolioDB");
+    const collection = db.collection("users");
+
+    let addResponse = await collection.insertOne(user);
+    res.status(200).json({ success: addResponse.success })
+
+  }
 
 /*
 CRUD

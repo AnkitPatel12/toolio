@@ -1,10 +1,11 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const User = require('user')
 
 async function connectDB() {
   const user = "codinggodsquad";
   const pass = "R0acDp4dmt0slNpN";
   const uri = "mongodb+srv://" + user + ":" + pass + "@cluster0.mx8wuc3.mongodb.net/?retryWrites=true&w=majority";
-  
+
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
   const client = new MongoClient(uri, {
     serverApi: {
@@ -25,20 +26,33 @@ async function connectDB() {
   return client;
 }
 
-async function addUser(name, age){
+// export default async function initDB() {
+
+// }
+
+export default async function addUser(user) {
   const client = await connectDB();
   const db = client.db("toolioDB");
   const collection = db.collection("users");
-  const document = { name: name, age: age };
+
+  const document = user.toJSON();
   const result = await collection.insertOne(document);
-  // console.log(`Inserted ${result.insertedCount} document`);
-  client.close();
+  return result
 }
 
-async function main(){
-  addUser("Boke", "25");
-  addUser("Boke", "20");
-  addUser("Boke", "15");
+export default async function findUser(user) {
+  const client = await connectDB();
+  const db = client.db("toolioDB");
+  const collection = db.collection("users");
+
+  const res = collection.findOne({ username: user.getUsername(), hashedPassword: user.getHashedPassword() });
+  return { success: res.acknowledged };
+}
+
+async function main() {
+  const user = new User("Boke", "30", false);
+  addUser(user);
+  console.log(await findUser(user));
 }
 
 main();
