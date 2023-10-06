@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const User = require('user')
+const User = require('./user.js');
 
 async function connectDB() {
   const user = "codinggodsquad";
@@ -30,28 +30,33 @@ async function connectDB() {
 
 // }
 
-export default async function addUser(user) {
+async function addUser(user) {
   const client = await connectDB();
   const db = client.db("toolioDB");
   const collection = db.collection("users");
 
-  const document = user.toJSON();
-  const result = await collection.insertOne(document);
+  // const document = user.toJSON();
+  const result = await collection.insertOne(user);
+  client.close();
   return result
 }
 
-export default async function findUser(user) {
+async function findUser(user) {
   const client = await connectDB();
   const db = client.db("toolioDB");
   const collection = db.collection("users");
 
-  const res = collection.findOne({ username: user.getUsername(), hashedPassword: user.getHashedPassword() });
-  return { success: res.acknowledged };
+  const target = await collection.findOne({ username: user.getUsername(), hashedPassword: user.getHashedPassword() });
+  client.close();
+  return target;
 }
 
 async function main() {
-  const user = new User("Boke", "30", false);
-  addUser(user);
+  var user = new User("Boke", "30", false);
+  console.log(await findUser(user));
+  user = new User("Boke", "60", false);
+  console.log(await findUser(user));
+  user = new User("Boke", "25", false);
   console.log(await findUser(user));
 }
 
