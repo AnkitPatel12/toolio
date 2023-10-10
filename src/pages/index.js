@@ -8,6 +8,7 @@ import Benefits from "./components/landing/benefits";
 import Footer from "./components/footer";
 import Cta from "./components/landing/cta";
 import Faq from "./components/landing/faq";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const Home = () => {
   return (

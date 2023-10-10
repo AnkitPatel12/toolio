@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "../container";
 import { Button } from "@material-tailwind/react";
+import Link from "next/link";
 
 const Cta = () => {
   return (
@@ -14,16 +15,10 @@ const Cta = () => {
             Don&apos;t let your website be a liability.
           </p>
         </div>
-        
-          <a
-            href=""
-            target="_blank"
-            rel="noopener"
-            className="">
-            
-            <Button style={{ml:6, textTransform: 'inherit'}} className="flex-shrink-0 w-full text-center lg:w-auto bg-white text-[var(--highlight-color)] text-lg lg:px-7 lg:py-5 py-3 mx-auto inline-block font-medium px-7 " href="">Start for Free</Button>
-          </a>
-        
+        <Link href="/register">
+          <Button style={{ ml: 6, textTransform: 'inherit' }} className="flex-shrink-0 w-full text-center lg:w-auto bg-white text-[var(--highlight-color)] text-lg lg:px-7 lg:py-5 py-3 mx-auto inline-block font-medium px-7 " href="">Start for Free</Button>
+        </Link>
+
       </div>
     </Container>
   );

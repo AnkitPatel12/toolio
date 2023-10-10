@@ -22,6 +22,7 @@
   --more-list-shadow: rgba(209, 209, 209, 0.4);
   --highlight-color: rgb(57, 73, 171);
   --button-bg: #1f1c24;
+  --message-warn: #f44336;
   --search-area-bg: #fff;
   --star: #1ff1c2e;
   --message-btn: #fff;
@@ -38,6 +39,7 @@
   --link-color-active-bg: rgba(195, 207, 244, 0.2);
   --highlight-color: rgb(57, 73, 171);
   --button-bg: #1f2937;
+  --message-warn: #f44336;
   --search-area-bg: #1f2937;
   --message-box-hover: #243244;
   --message-box-border: rgba(255,255,255,.1);

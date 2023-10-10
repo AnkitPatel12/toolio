@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Container from "../container";
 import colorful_ribbon from "../../../../public/img/colorful_ribbon.png";
+import { Button } from "@material-tailwind/react";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -16,13 +18,17 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-              <a
-                href=""
-                target="_blank"
-                rel="noopener"
-                className="px-8 py-4 text-lg font-medium text-center text-white bg-[var(--button-bg)] rounded-md ">
-                Get started for Free
-              </a>
+              <Link href="/register">
+                <Button
+                  variant="gradient" 
+                  href=""
+                  style={{ml:6, textTransform: 'inherit'}}
+                  target="_blank"
+                  rel="noopener"
+                  className="px-8 py-4 text-lg font-medium text-center text-white bg-[var(--button-bg)]">
+                  Get started for Free
+                </Button>
+              </Link>
               <a
                 href="https://github.com/AnkitPatel12/toolio"
                 target="_blank"

@@ -6,18 +6,11 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import React from "react";
-import CryptoJS from 'crypto-js';
+import { hashPassword } from "../../../lib/crypto";
+import Link from "next/link";
 
-const hashPassword = 'oooOOOoo very much secure password'
-
-function encrypt(tohash) {
-    return tohash = CryptoJS.AES.encrypt(tohash, hashPassword).toString();
-}
-
-
-export function SimpleRegistrationForm() {
-    const [success, setSuccess] = React.useState(null);
-
+export function Register() {
+    const [addRes, setAddRes] = React.useState({success: true, message: null});
     async function onSubmit(event) {
         event.preventDefault()
 
@@ -27,16 +20,21 @@ export function SimpleRegistrationForm() {
             body: JSON.stringify({
                 name: formData.get("name"),
                 email: formData.get("email"),
-                password: encrypt(formData.get("password")),
+                password: hashPassword(formData.get("password")),
                 isAdmin: false
             }),
-        })
+        }).then(res => res.json())
 
         // hash the passowrd here
 
-        // Handle response if necessary
-        const data = await response.json()
-        setSuccess(data.success)
+        setAddRes({success: response.success, message: response.message})
+        // if(response.success) {
+        //     const res = await signIn("credentials", {
+        //         email: formData.get("email"),
+        //         password: formData.get("password"),
+        //         callbackUrl: "/home",
+        //     })
+        // }
         // ...
     }
 
@@ -48,13 +46,17 @@ export function SimpleRegistrationForm() {
             <Typography color="gray" className="mt-1 font-normal">
                 Enter your details to register.
             </Typography>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={onSubmit}>
-                <div className="mb-4 flex flex-col gap-6">
-                    <Input size="lg" label="Name" type="text" id="name" name="name" />
-                    <Input size="lg" label="Email" type="email" id="email" name="email" />
-                    <Input type="password" size="lg" label="Password" name="password" />
-                </div>
+            <form className="mt-4 gap-4 flex flex-col mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={onSubmit}>
+                {!addRes.success ?
+                    <p className="text-[var(--message-warn)]">{addRes.message}</p>
+                    :
+                    <></>
+                }
+                <Input size="lg" label="Name" type="text" id="name" name="name" />
+                <Input size="lg" label="Email" type="email" id="email" name="email" />
+                <Input type="password" size="lg" label="Password" name="password" />
                 <Checkbox
+                required
                     label={
                         <Typography
                             variant="small"
@@ -76,23 +78,13 @@ export function SimpleRegistrationForm() {
                     Register
                 </Button>
 
-                <Typography color="gray" className="mt-4 text-center font-normal">
+                <Typography color="gray" className="text-center font-normal">
                     Already have an account?{" "}
-                    <a href="#" className="font-medium text-gray-900">
+                    <Link href='/api/auth/signin' className="font-medium text-gray-900">
                         Sign In
-                    </a>
+                    </Link>
                 </Typography>
             </form>
-            {success ?
-                <p>Success!!</p>
-
-                :
-                <></>}
-
-
         </Card>
     );
 }
-
-
-

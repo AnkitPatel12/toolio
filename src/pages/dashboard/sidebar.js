@@ -27,7 +27,8 @@ import {
   CubeTransparentIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import Logo from "./logo";
+import Logo from "../components/logo";
+import { signOut } from "next-auth/react";
  
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
@@ -146,7 +147,7 @@ export function SidebarWithSearch() {
           </ListItemPrefix>
           Settings
         </ListItem>
-        <ListItem>
+        <ListItem onClick={(event) => {signOut()}}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

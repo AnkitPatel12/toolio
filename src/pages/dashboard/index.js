@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import Layout from '../components/mainLayout'
-import ProductGrid from '../components/productGrid';
-
+import ProductGrid from './productGrid';
+import Router from 'next/router';
 const products = [
     {
         id: 1,
@@ -36,8 +37,16 @@ const products = [
     },
     // ... more products
 ];
+import {useSession, signIn, signOut} from 'next-auth/react'
 
-export default function Home() {
+export default function Dashboard() {
+    const {data: session, status} = useSession();
+
+    useEffect(() => {
+        if(status === 'unauthenticated') Router.replace('/login');
+    }, [status]);
+
+    if(status === 'authenticated')
     return (
         <Layout>
             <div>
@@ -47,4 +56,6 @@ export default function Home() {
 
         </Layout>
     )
+
+    return <div></div>
 }
