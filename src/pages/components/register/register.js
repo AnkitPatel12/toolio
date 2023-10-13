@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { hashPassword } from "../../../lib/crypto";
 import Link from "next/link";
-
+import { signIn } from "next-auth/react";
 export function Register() {
     const [addRes, setAddRes] = React.useState({success: true, message: null});
     async function onSubmit(event) {
@@ -28,14 +28,13 @@ export function Register() {
         // hash the passowrd here
 
         setAddRes({success: response.success, message: response.message})
-        // if(response.success) {
-        //     const res = await signIn("credentials", {
-        //         email: formData.get("email"),
-        //         password: formData.get("password"),
-        //         callbackUrl: "/home",
-        //     })
-        // }
-        // ...
+        if(response.success) {
+            await signIn("credentials", {
+                email: formData.get("email"),
+                password: formData.get("password"),
+                callbackUrl: "/dashboard",
+            })
+        }
     }
 
     return (

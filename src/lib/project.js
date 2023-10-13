@@ -2,7 +2,7 @@ class Project {
     constructor(name, description, id) {
         this.name = name;
         this.description = description;
-        this.id = id;
+        this.id = id; //each project will have unique name
         this.resources = [];
     }
 

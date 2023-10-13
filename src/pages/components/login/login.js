@@ -5,15 +5,22 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link";
+import Router from "next/router";
 
 // fix login encrypt and decrypt
 
 export function Login() {
     const [addRes, setAddRes] = React.useState({success: true, message: null});
     const [userInfo, setUserInfo] = React.useState({email: null, password: null})
+    const {data: session, status} = useSession();
+
+    useEffect(() => {
+        if(status === 'authenticated') Router.replace('/dashboard');
+    }, [status])
+    
     async function onSubmit(event) {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
