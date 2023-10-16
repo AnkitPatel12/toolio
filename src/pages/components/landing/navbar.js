@@ -40,14 +40,13 @@ export default function NavbarDefault() {
           color="blue-gray"
           className="p-1 font-normal"
         >
-          <Link href="/dashboard">
-            <Button size="sm" variant="text" className="flex items-center">
+          <Link href="/projects">
+            <Button size="sm" variant="text" className="flex items-center" style={{ml:6, textTransform: 'inherit'}}>
               My Dashboard
             </Button>
           </Link>
         </Typography>
       </>
-        
         :
         <>
           <Typography
@@ -93,7 +92,7 @@ export default function NavbarDefault() {
         <Logo />
         <div className="hidden lg:block">{navList}</div>
         <Link href="/register">
-          <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+          <Button variant="gradient" size="sm" className="hidden lg:inline-block" style={{ml:6, textTransform: 'inherit'}}> 
             <span>Get started</span>
           </Button>
         </Link>
@@ -139,7 +138,7 @@ export default function NavbarDefault() {
         <div className="container mx-auto">
           {navList}
           <Link href="/register" scroll={false}>
-            <Button variant="gradient" size="sm" fullWidth className="mb-2">
+            <Button variant="gradient" size="sm" fullWidth className="mb-2" style={{ml:6, textTransform: 'inherit'}}>
               <span>Get started</span>
             </Button>
           </Link>

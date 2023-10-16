@@ -18,7 +18,7 @@ export function Login() {
     const {data: session, status} = useSession();
 
     useEffect(() => {
-        if(status === 'authenticated') Router.replace('/dashboard');
+        if(status === 'authenticated') Router.replace('/projects');
     }, [status])
     
     async function onSubmit(event) {
@@ -29,7 +29,7 @@ export function Login() {
         {
             email: formData.get("email"),
             password: formData.get("password"),
-            callbackUrl: "/dashboard",
+            callbackUrl: "/projects",
         })
 
         // console.log(response)

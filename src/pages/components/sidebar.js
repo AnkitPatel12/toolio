@@ -27,7 +27,7 @@ import {
   CubeTransparentIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import Logo from "../components/logo";
+import Logo from "./logo";
 import { signOut } from "next-auth/react";
  
 export function SidebarWithSearch() {

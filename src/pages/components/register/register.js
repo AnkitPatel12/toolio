@@ -32,7 +32,7 @@ export function Register() {
             await signIn("credentials", {
                 email: formData.get("email"),
                 password: formData.get("password"),
-                callbackUrl: "/dashboard",
+                callbackUrl: "/projects",
             })
         }
     }
@@ -51,9 +51,9 @@ export function Register() {
                     :
                     <></>
                 }
-                <Input size="lg" label="Name" type="text" id="name" name="name" />
-                <Input size="lg" label="Email" type="email" id="email" name="email" />
-                <Input type="password" size="lg" label="Password" name="password" />
+                <Input required size="lg" label="Name" type="text" id="name" name="name" />
+                <Input required size="lg" label="Email" type="email" id="email" name="email" />
+                <Input required type="password" size="lg" label="Password" name="password" />
                 <Checkbox
                 required
                     label={
