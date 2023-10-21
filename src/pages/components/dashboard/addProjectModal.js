@@ -18,7 +18,7 @@ import {
 import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 
-export function AddProjectModal({setAlertType, setAlerted}) {
+export function AddProjectModal({ setAlert, setAlerted }) {
     const [open, setOpen] = React.useState(false);
     const { data: session, status } = useSession();
     const [addRes, setAddRes] = React.useState({ success: true, message: null });
@@ -28,7 +28,7 @@ export function AddProjectModal({setAlertType, setAlerted}) {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        const response = await fetch('/api/projects/add', {
+        await fetch('/api/projects/add', {
             method: 'POST',
             body: JSON.stringify({
                 email: session.user.email,
@@ -38,7 +38,7 @@ export function AddProjectModal({setAlertType, setAlerted}) {
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
             if (response.success) {
-                setAlertType('success')
+                setAlert({ type: 'success', message: "Project added!" })
                 setAlerted(true)
                 handleOpen()
             }

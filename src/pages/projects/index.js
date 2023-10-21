@@ -14,7 +14,7 @@ export default function Projects({ user }) {
     const { data: session, status } = useSession();
     const [projects, setProjects] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
-    const [alertType, setAlertType] = React.useState('');
+    const [alert, setAlert] = React.useState({ type: '', message: '' });
     const [alerted, setAlerted] = React.useState(false);
     function Alerts() {
         const [open, setOpen] = React.useState(true);
@@ -31,24 +31,40 @@ export default function Projects({ user }) {
         }, []);
         return (
             <>
-                    <>
-                        {alertType === 'success' &&
-                            <>
-                                <Alert
-                                    open={open}
-                                    color="green"
-                                    onClose={() => setOpen(false)}
-                                    className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
-                                    animate={{
-                                        mount: { y: 0 },
-                                        unmount: { y: 100 },
-                                    }}
-                                >
-                                    Project added!
-                                </Alert>
-                            </>
-                        }
-                    </>
+                <>
+                    {alert.type === 'success' &&
+                        <>
+                            <Alert
+                                open={open}
+                                color="green"
+                                onClose={() => setOpen(false)}
+                                className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
+                                animate={{
+                                    mount: { y: 0 },
+                                    unmount: { y: 100 },
+                                }}
+                            >
+                                {alert.message}
+                            </Alert>
+                        </>
+                    }
+                    {alert.type === 'fail' &&
+                        <>
+                            <Alert
+                                open={open}
+                                color="red"
+                                onClose={() => setOpen(false)}
+                                className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
+                                animate={{
+                                    mount: { y: 0 },
+                                    unmount: { y: 100 },
+                                }}
+                            >
+                                {alert.message}
+                            </Alert>
+                        </>
+                    }
+                </>
             </>
 
         )
@@ -56,7 +72,7 @@ export default function Projects({ user }) {
     useEffect(() => {
         if (status === 'unauthenticated') { Router.replace('/login'); }
         else {
-            const response = fetch('/api/projects/fetch', {
+            fetch('/api/projects/fetch', {
                 method: 'POST',
                 body: JSON.stringify({
                     email: user.email,
@@ -68,19 +84,19 @@ export default function Projects({ user }) {
                 setAlerted(false)
             })
         }
-    }, [status, alerted]);
+    }, [alerted]);
 
     if (status === 'authenticated')
         return (
             <Layout>
 
-                <div className='flex justify-between items-center'>
+                <div className='flex justify-between items-center pb-7'>
                     <h1 className=''>My Projects</h1>
-                    <AddProjectModal setAlertType={setAlertType} setAlerted={setAlerted} />
+                    <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} />
                 </div>
                 <div>
                     {!loading &&
-                        <ProjectGrid projects={projects} setAlertType={setAlertType} setAlerted={setAlerted} />
+                        <ProjectGrid projects={projects} setAlert={setAlert} setAlerted={setAlerted} />
                     }
                 </div>
                 <Alerts />

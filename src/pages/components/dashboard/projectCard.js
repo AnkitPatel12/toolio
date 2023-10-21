@@ -21,21 +21,63 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { set } from "lodash";
 
-export function ProjectMenu({projectName, setAlertType, setAlerted}) {
-  const {data: session, status} = useSession();
+export function ProjectMenu({ project, setAlert, setAlerted }) {
+  const { data: session, status } = useSession();
   function deleteProject() {
-   fetch ('/api/projects/delete', {
+    fetch('/api/projects/delete', {
       method: 'POST',
       body: JSON.stringify({
         email: session.user.email,
-        name: projectName,
+        name: project.name,
       })
+    }).then(res => res.json()).then((response) => {
+      if (response.success) {
+        setAlert({ type: 'success', message: "Project deleted!" })
+        setAlerted(true)
+      }
+    })
+  }
+
+
+
+  function duplicateProject() {
+
+    fetch('/api/projects/fetch', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: session.user.email,
+      }),
+    }).then(res => res.json()).then((response) => {
+      let projects = response.projects
+      let projectNames = projects.map(obj => obj.name);
+
+      let baseName = project.name.split('_')[0];
+      let suffix = project.name.split('_')[1];
+      let count = suffix ? parseInt(suffix) : 0;
+
+      let newName = count > 0 ? baseName + '_' + count : baseName;
+
+      while (projectNames.includes(newName)) {
+        count++;
+        newName = baseName + '_' + count;
+      }
+
+      fetch('/api/projects/add', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: session.user.email,
+          name: newName,
+          description: project.description,
+        }),
       }).then(res => res.json()).then((response) => {
         if (response.success) {
-          setAlertType('success')
+          setAlert({ type: 'success', message: "Project duplicated!" })
           setAlerted(true)
         }
-      })}
+      })
+
+    })
+  }
 
   return (
     <Menu>
@@ -47,7 +89,7 @@ export function ProjectMenu({projectName, setAlertType, setAlerted}) {
       <MenuList>
         <MenuItem>Add project users</MenuItem>
         <MenuItem>Edit project</MenuItem>
-        <MenuItem>Duplicate project</MenuItem>
+        <MenuItem onClick={duplicateProject}>Duplicate project</MenuItem>
         <hr className="my-3" />
         <MenuItem className="text-[var(--message-warn)]" onClick={deleteProject}>Delete Project</MenuItem>
       </MenuList>
@@ -55,7 +97,7 @@ export function ProjectMenu({projectName, setAlertType, setAlerted}) {
   );
 }
 
-export default function ProjectCard({ project, setAlertType, setAlerted }) {
+export default function ProjectCard({ project, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())
   return (
     <Card className="w-72 lg:w-96 2xl:w-[500px] shadow-none" style={{ background: color }}>
@@ -78,7 +120,7 @@ export default function ProjectCard({ project, setAlertType, setAlerted }) {
         </IconButton>
       </CardHeader>
       <CardBody>
-        <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <Typography variant="h5" color="blue-gray" className="font-medium truncate">
             {project.name}
           </Typography>
@@ -86,27 +128,44 @@ export default function ProjectCard({ project, setAlertType, setAlerted }) {
             color="blue-gray"
             className="flex items-center gap-1.5 font-normal"
           >
-            <ProjectMenu projectName={project.name} setAlertType={setAlertType} setAlerted={setAlerted}/>
+            <ProjectMenu project={project} setAlert={setAlert} setAlerted={setAlerted} />
           </Typography>
         </div>
-        <Typography color="gray">
+
+        <Typography color="gray" className="pb-2">
           {project.description == "" ? "No description" : project.description}
         </Typography>
-        <div class="group inline-flex flex-wrap items-center gap-3">
-        {Object.entries(project.items) == 0
-        ? 
-        <Button style={{ml:6, textTransform: 'inherit'}} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">No items</Button>
-        :
+
+        <Typography color="black" className="pt-4">
+          Assigned to
+        </Typography>
         <>
-        {Object.entries(project.items).map(([item, amt]) => (
-          <Button style={{ml:6, textTransform: 'inherit'}} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
-            <Typography color="gray" className="font-semibold">{amt}</Typography>
-            <Typography color="gray" className="text-sm">{item}</Typography>
-          </Button>
-        ))}
-        
+          {project.users.map((user) => (
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+              <Typography className="font-semibold">{user}</Typography>
+            </Button>
+          ))}
+
         </>
-        }
+
+        <Typography color="black" className="pt-4">
+          Project items
+        </Typography>
+        <div class="group inline-flex flex-wrap items-center gap-3">
+          {Object.entries(project.items) == 0
+            ?
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-3 px-3">No items</Button>
+            :
+            <>
+              {Object.entries(project.items).map(([item, amt]) => (
+                <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+                  <Typography className="font-semibold">{amt}</Typography>
+                  <Typography className="text-sm">{item}</Typography>
+                </Button>
+              ))}
+
+            </>
+          }
         </div>
       </CardBody>
       {/* <CardFooter className="pt-3">
