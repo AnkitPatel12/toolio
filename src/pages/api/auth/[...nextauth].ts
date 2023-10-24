@@ -17,7 +17,7 @@ export const authOptions = {
             },
             async authorize(credentials, req) {
               // Add logic here to look up the user from the credentials supplied
-              const response = await fetch(process.env.NEXTAUTH_URL + '/api/authuser', {
+              const response = await fetch(process.env.NEXTAUTH_URL + '/api/users/auth', {
                 method: 'POST',
                 body: JSON.stringify({
                     email: credentials.email,

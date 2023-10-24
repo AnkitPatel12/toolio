@@ -1,6 +1,5 @@
-import User from "../../lib/user"
-import clientPromise from "../../lib/mongodb";
-import { add } from "lodash";
+import User from "../../../lib/user"
+import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
     const client = await clientPromise;

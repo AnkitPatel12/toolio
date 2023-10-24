@@ -18,22 +18,24 @@ import {
 import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 
-export function AddProjectModal({ setAlert, setAlerted }) {
-    const [open, setOpen] = React.useState(false);
+export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setAlerted }) {
     const { data: session, status } = useSession();
     const [addRes, setAddRes] = React.useState({ success: true, message: null });
-    const handleOpen = () => setOpen((cur) => !cur);
+    const handleOpen = () => setOpenEdit((cur) => !cur);
 
     async function onSubmit(event) {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        await fetch('/api/projects/add', {
+        await fetch('/api/projects/edit', {
             method: 'POST',
             body: JSON.stringify({
                 email: session.user.email,
-                name: formData.get("projectName"),
+                name: project.name,
+                newName: formData.get("projectName"),
                 description: formData.get("projectDescription"),
+                users: project.users,
+                items: project.items,
             }),
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
@@ -47,11 +49,8 @@ export function AddProjectModal({ setAlert, setAlerted }) {
 
     return (
         <>
-            <Button className='rounded-full w-[52px] shadow-none' onClick={handleOpen}>
-                <PlusIcon className='h-7 w-7 ms-[-12px]' />
-            </Button>
             <Dialog
-                open={open}
+                open={openEdit}
                 handler={handleOpen}
                 className="bg-transparent shadow-none "
             >
@@ -59,7 +58,7 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                     <form className="" onSubmit={onSubmit}>
                         <CardBody className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">
-                                <h1 className='mt-2'>Create a project</h1>
+                                <h1 className='mt-2'>Edit {project.name}</h1>
                                 <Button className='rounded-full w-[50px] h-[50px] mt-[-10px] me-[-10px]' variant="text" onClick={handleOpen}>
                                     <XMarkIcon className='h-7 w-7 ms-[-13px]' />
                                 </Button>
@@ -69,12 +68,12 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                                 :
                                 <></>
                             }
-                            <Input required label="Project Name" type="text" id="projectName" name="projectName" size="lg" />
-                            <Textarea label="Project Description" type="text" id="projectDescription" name="projectDescription" size="lg" />
+                            <Input required label="Project Name" type="text" id="projectName" name="projectName" size="lg" defaultValue={project.name} />
+                            <Textarea label="Project Description" type="text" id="projectDescription" name="projectDescription" size="lg" defaultValue={project.description} />
                         </CardBody>
-                        <CardFooter className="pt-0">
-                            <Button variant="gradient" className="me-3" value="Submit" type="submit">
-                                Create Project
+                        <CardFooter className="pt-0 flex flex-row ">
+                            <Button variant="gradient" className="me-3"  value="Submit" type="submit">
+                                Edit Project
                             </Button>
                             <Button variant="gradient" color="red" onClick={handleOpen}>
                                 Exit

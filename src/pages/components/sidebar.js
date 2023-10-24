@@ -29,22 +29,23 @@ import {
 } from "@heroicons/react/24/outline";
 import Logo from "./logo";
 import { signOut } from "next-auth/react";
- 
+import Link from "next/link";
+
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
- 
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
- 
+
   return (
     <Card className="h-[calc(100vh)] w-full max-w-[16rem] p-4 shadow-none rounded-none bg-[var(--app-container)]">
       <div className="p-4">
         <Logo />
       </div>
       <div className="p-2">
-        <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search"/>
+        <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
       </div>
       <List>
         <Accordion
@@ -80,12 +81,15 @@ export function SidebarWithSearch() {
                 </ListItemPrefix>
                 Reporting
               </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Projects
-              </ListItem>
+              <Link className="mb-2 flex items-center gap-4" href="/projects">
+                <ListItem>
+                  <ListItemPrefix>
+                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                  </ListItemPrefix>
+                  My Projects
+                </ListItem>
+              </Link>
+
             </List>
           </AccordionBody>
         </Accordion>
@@ -147,7 +151,7 @@ export function SidebarWithSearch() {
           </ListItemPrefix>
           Settings
         </ListItem>
-        <ListItem onClick={(event) => {signOut()}}>
+        <ListItem onClick={(event) => { signOut() }}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

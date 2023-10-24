@@ -19,88 +19,93 @@ import {
 import { getColor } from "../../../lib/colors";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { set } from "lodash";
-
-export function ProjectMenu({ project, setAlert, setAlerted }) {
-  const { data: session, status } = useSession();
-  function deleteProject() {
-    fetch('/api/projects/delete', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: session.user.email,
-        name: project.name,
-      })
-    }).then(res => res.json()).then((response) => {
-      if (response.success) {
-        setAlert({ type: 'success', message: "Project deleted!" })
-        setAlerted(true)
-      }
-    })
-  }
+import { EditProjectModal } from "./editProjectModal";
 
 
-
-  function duplicateProject() {
-
-    fetch('/api/projects/fetch', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: session.user.email,
-      }),
-    }).then(res => res.json()).then((response) => {
-      let projects = response.projects
-      let projectNames = projects.map(obj => obj.name);
-
-      let baseName = project.name.split('_')[0];
-      let suffix = project.name.split('_')[1];
-      let count = suffix ? parseInt(suffix) : 0;
-
-      let newName = count > 0 ? baseName + '_' + count : baseName;
-
-      while (projectNames.includes(newName)) {
-        count++;
-        newName = baseName + '_' + count;
-      }
-
-      fetch('/api/projects/add', {
-        method: 'POST',
-        body: JSON.stringify({
-          email: session.user.email,
-          name: newName,
-          description: project.description,
-        }),
-      }).then(res => res.json()).then((response) => {
-        if (response.success) {
-          setAlert({ type: 'success', message: "Project duplicated!" })
-          setAlerted(true)
-        }
-      })
-
-    })
-  }
-
-  return (
-    <Menu>
-      <MenuHandler>
-        <Button className='rounded-full w-[52px]' variant="text">
-          <EllipsisVerticalIcon className='h-7 w-7 ms-[-12px]' />
-        </Button>
-      </MenuHandler>
-      <MenuList>
-        <MenuItem>Add project users</MenuItem>
-        <MenuItem>Edit project</MenuItem>
-        <MenuItem onClick={duplicateProject}>Duplicate project</MenuItem>
-        <hr className="my-3" />
-        <MenuItem className="text-[var(--message-warn)]" onClick={deleteProject}>Delete Project</MenuItem>
-      </MenuList>
-    </Menu>
-  );
-}
 
 export default function ProjectCard({ project, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())
+  const [openEdit, setOpenEdit] = React.useState(false);
+
+  function ProjectMenu({ project, setAlert, setAlerted }) {
+    const { data: session, status } = useSession();
+    function deleteProject() {
+      fetch('/api/projects/delete', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: session.user.email,
+          name: project.name,
+        })
+      }).then(res => res.json()).then((response) => {
+        if (response.success) {
+          setAlert({ type: 'success', message: "Project deleted!" })
+          setAlerted(true)
+        }
+      })
+    }
+  
+    function duplicateProject() {
+  
+      fetch('/api/projects/fetch', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: session.user.email,
+        }),
+      }).then(res => res.json()).then((response) => {
+        let projects = response.projects
+        let projectNames = projects.map(obj => obj.name);
+  
+        let baseName = project.name.split('_')[0];
+        let suffix = project.name.split('_')[1];
+        let count = suffix ? parseInt(suffix) : 0;
+  
+        let newName = count > 0 ? baseName + '_' + count : baseName;
+  
+        while (projectNames.includes(newName)) {
+          count++;
+          newName = baseName + '_' + count;
+        }
+  
+        fetch('/api/projects/add', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: session.user.email,
+            name: newName,
+            description: project.description,
+          }),
+        }).then(res => res.json()).then((response) => {
+          if (response.success) {
+            setAlert({ type: 'success', message: "Project duplicated!" })
+            setAlerted(true)
+          }
+        })
+  
+      })
+    }
+  
+    return (
+      <Menu>
+        <MenuHandler>
+          <Button className='rounded-full w-[52px]' variant="text">
+            <EllipsisVerticalIcon className='h-7 w-7 ms-[-12px]' />
+          </Button>
+        </MenuHandler>
+        <MenuList>
+          <MenuItem onClick={(e) => setOpenEdit(true)}>Edit project</MenuItem>
+          <MenuItem>Edit collaborators</MenuItem>
+          <MenuItem onClick={duplicateProject}>Duplicate project</MenuItem>
+          <hr className="my-3" />
+          <MenuItem className="text-[var(--message-warn)]" onClick={deleteProject}>Delete Project</MenuItem>
+        </MenuList>
+      </Menu>
+    );
+  }
+
   return (
     <Card className="w-72 lg:w-96 2xl:w-[500px] shadow-none" style={{ background: color }}>
+      
+      <EditProjectModal project={project} openEdit={openEdit} setOpenEdit={setOpenEdit} setAlert={setAlert} setAlerted={setAlerted} />
+      
       <CardHeader floated={false} color="blue-gray" className="mt-0">
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton

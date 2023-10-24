@@ -15,7 +15,7 @@ export function Register() {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        const response = await fetch('/api/adduser', {
+        const response = await fetch('/api/users/add', {
             method: 'POST',
             body: JSON.stringify({
                 name: formData.get("name"),
@@ -24,8 +24,6 @@ export function Register() {
                 isAdmin: false
             }),
         }).then(res => res.json())
-
-        // hash the passowrd here
 
         setAddRes({success: response.success, message: response.message})
         if(response.success) {

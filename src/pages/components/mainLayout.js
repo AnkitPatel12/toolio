@@ -12,10 +12,8 @@ export default function Layout({ children }) {
                 <SidebarWithSearch />
             </aside>
             <main className='py-4'>
-                <Card className="h-[calc(100vh-2rem)] w-[calc(100vw-17rem)] min-w-[700px] p-4 rounded-3xl shadow-none overflow-y-scroll">
-                    <div className="mb-2 items-center gap-4 p-4 ">
-                        {children}
-                    </div>
+                <Card className="h-[calc(100vh-2rem)] w-[calc(100vw-17rem)] min-w-[700px] p-8 rounded-3xl shadow-none overflow-y-scroll">
+                    {children}
                 </Card>
             </main>
             {/* <Footer /> */}

@@ -1,6 +1,5 @@
-import User from "../../lib/user"
-import clientPromise from "../../lib/mongodb";
-import { comparePass } from "../../lib/crypto";
+import clientPromise from "../../../lib/mongodb";
+import { comparePass } from "../../../lib/crypto";
 
 export default async function handler(req, res) {
     const client = await clientPromise;
