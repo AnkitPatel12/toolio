@@ -137,10 +137,17 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         </Typography>
 
         <Typography color="black" className="pt-4">
-          Assigned to
+          Collaborators
         </Typography>
         <>
-          {project.users.map((user) => (
+          {
+            project.users.length == 0 && 
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+              <Typography className="font-semibold">No collaborators</Typography>
+            </Button>
+          }
+          
+          {project?.users?.map((user) => (
             <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
               <Typography className="font-semibold">{user}</Typography>
             </Button>

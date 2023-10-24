@@ -26,6 +26,7 @@ export default async function handler(req, res) {
             projects: [{
                 name: "Example Project",
                 description: "This is an example project!",
+                users : [formData.email],
                 items: {
                 }
             }]
