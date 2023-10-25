@@ -17,6 +17,9 @@ export default function Layout({ children }) {
                 </Card>
             </main>
             {/* <Footer /> */}
+            <div>
+                {/* Add other routes as needed */}
+            </div>
         </div>
 
     )

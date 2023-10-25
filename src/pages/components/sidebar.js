@@ -30,6 +30,7 @@ import {
 import Logo from "./logo";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import Router from "next/router";
 
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
@@ -37,6 +38,10 @@ export function SidebarWithSearch() {
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
+  };
+
+  const navigateToProducts = () => {
+    Router.push('/products');
   };
 
   return (
@@ -82,7 +87,7 @@ export function SidebarWithSearch() {
                 Reporting
               </ListItem>
               <Link className="mb-2 flex items-center gap-4" href="/projects">
-                <ListItem>
+                <ListItem >
                   <ListItemPrefix>
                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                   </ListItemPrefix>
@@ -120,11 +125,11 @@ export function SidebarWithSearch() {
                 </ListItemPrefix>
                 Orders
               </ListItem>
-              <ListItem>
+              <ListItem onClick={navigateToProducts}>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                Products
+                    Products
               </ListItem>
             </List>
           </AccordionBody>
