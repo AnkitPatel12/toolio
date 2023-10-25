@@ -46,6 +46,16 @@ export default function NavbarDefault() {
             </Button>
           </Link>
         </Typography>
+        <Typography
+            as="li"
+            variant="small"
+            color="blue-gray"
+            className="p-1 font-normal"
+          >
+            <Link href="/profile" className="flex items-center">
+              Profile
+            </Link>
+          </Typography>
       </>
         :
         <>
@@ -58,6 +68,7 @@ export default function NavbarDefault() {
             <Link href="/login" className="flex items-center">
               Log in
             </Link>
+            
           </Typography>
           <Typography
             as="li"
