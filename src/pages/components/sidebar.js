@@ -31,10 +31,12 @@ import Logo from "./logo";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Router from "next/router";
+import { useRecoilState } from "recoil";
+import { sidebarState } from "../../atoms/sidebarAtom";
 
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
+  const [sidebar, setSidebar] = useRecoilState(sidebarState);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -54,16 +56,16 @@ export function SidebarWithSearch() {
       </div>
       <List>
         <Accordion
-          open={open === 1}
+          open={sidebar.projectsOpen}
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
+              className={`mx-auto h-4 w-4 transition-transform ${sidebar.projectsOpen ? "rotate-180" : ""}`}
             />
           }
         >
-          <ListItem className="p-0" selected={open === 1}>
-            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
+          <ListItem className="p-0" selected={sidebar.projectsOpen}>
+            <AccordionHeader onClick={() => setSidebar({...sidebar, projectsOpen: !sidebar.projectsOpen})} className="border-b-0 p-3">
               <ListItemPrefix>
                 <PresentationChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -99,16 +101,16 @@ export function SidebarWithSearch() {
           </AccordionBody>
         </Accordion>
         <Accordion
-          open={open === 2}
+          open={sidebar.toolStoreOpen}
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
+              className={`mx-auto h-4 w-4 transition-transform ${sidebar.toolStoreOpen ? "rotate-180" : ""}`}
             />
           }
         >
-          <ListItem className="p-0" selected={open === 2}>
-            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+          <ListItem className="p-0" selected={sidebar.toolStoreOpen}>
+            <AccordionHeader onClick={() => setSidebar({...sidebar, toolStoreOpen: !sidebar.toolStoreOpen})} className="border-b-0 p-3">
               <ListItemPrefix>
                 <ShoppingBagIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -144,12 +146,14 @@ export function SidebarWithSearch() {
             <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
           </ListItemSuffix>
         </ListItem>
+        <Link className="mb-2 flex items-center gap-4" href="/profile">
         <ListItem>
           <ListItemPrefix>
             <UserCircleIcon className="h-5 w-5" />
           </ListItemPrefix>
           Profile
         </ListItem>
+        </Link>
         <ListItem>
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />

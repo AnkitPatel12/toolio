@@ -23,7 +23,9 @@ export default function Profile({ user }) {
 
     return (
         <Layout>
-            <div>
+            <div className='flex justify-between items-center pb-7'>
+                <h1 className=''>Hi, {user.name === '' ? user.email : user.name}</h1>
+                </div>
                 <h1>{user.name}</h1>
                 <p>{user.email}</p>
                 <h2>Projects:</h2>
@@ -36,7 +38,7 @@ export default function Profile({ user }) {
                         ))}
                     </ul>
                 )}
-            </div>
+
         </Layout>
     );
 }
