@@ -26,8 +26,8 @@ export default function Profile({ user }) {
             <div className='flex justify-between items-center pb-7'>
                 <h1 className=''>Hi, {user.name === '' ? user.email : user.name}</h1>
                 </div>
-                <h1>{user.name}</h1>
-                <p>{user.email}</p>
+                <h1>Name: {user.name}</h1>
+                <p>Email: {user.email}</p>
                 <h2>Projects:</h2>
                 {loading ? (
                     <Loading />
