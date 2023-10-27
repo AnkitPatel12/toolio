@@ -40,7 +40,7 @@ export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setA
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
             if (response.success) {
-                setAlert({ type: 'success', message: "Project added!" })
+                setAlert({ type: 'success', message: "Project updated!" })
                 setAlerted(true)
                 handleOpen()
             }

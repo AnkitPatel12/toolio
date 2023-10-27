@@ -15,11 +15,11 @@ export default async function handler(req, res) {
         // create new project collection for user
         let projectCollection = db.collection("projects");
 
-        //check if project already exists
-        let findCursor = await projectCollection.find({ email: formData.email, "projects.name": formData.name })
+        //check if project exists
+        let findCursor = await projectCollection.find({ email: formData.email, "projects.name": formData.newName })
         let findResponse = await findCursor.toArray()
-        if (findResponse.length == 0) {
-            res.send({ status: 200, success: false, message: "Project does not exist" });
+        if (formData.newName != formData.name && findResponse.length != 0) {
+            res.send({ status: 200, success: false, message: "Project already exists"});
             return;
         }
 
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
             "$set": {
                 "projects.$.name": formData.newName,
                 "projects.$.description": formData.description,
+                "projects.$.users": formData.users,
             }
         };
 
