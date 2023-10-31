@@ -81,7 +81,7 @@ export default function Profile({user}) {
         <Layout>
             <div className='flex justify-between items-center pb-7'>
                     <h1 className=''>Hello {user.name === '' ? user.email : user.name}</h1>
-                    <EditProfileModal user={user} setAlert={setAlert} setAlerted={setAlerted} />
+                    {/* <EditProfileModal user={user} setAlert={setAlert} setAlerted={setAlerted} /> */}
                 </div>
             <p className='mb-2'>Name: {user.name === '' ? 'None' : user.name}</p>
             <p className='mb-2'>Email: {user.email}</p>
