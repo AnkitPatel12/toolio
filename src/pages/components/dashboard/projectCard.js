@@ -21,14 +21,12 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { EditProjectModal } from "./editProjectModal";
 
-
-
 export default function ProjectCard({ project, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())
   const [openEdit, setOpenEdit] = React.useState(false);
-
   function ProjectMenu({ project, setAlert, setAlerted }) {
     const { data: session, status } = useSession();
+
     function deleteProject() {
       fetch('/api/projects/delete', {
         method: 'POST',
@@ -43,9 +41,9 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         }
       })
     }
-  
+
     function duplicateProject() {
-  
+
       fetch('/api/projects/fetch', {
         method: 'POST',
         body: JSON.stringify({
@@ -54,18 +52,18 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
       }).then(res => res.json()).then((response) => {
         let projects = response.projects
         let projectNames = projects.map(obj => obj.name);
-  
+
         let baseName = project.name.split('_')[0];
         let suffix = project.name.split('_')[1];
         let count = suffix ? parseInt(suffix) : 0;
-  
+
         let newName = count > 0 ? baseName + '_' + count : baseName;
-  
+
         while (projectNames.includes(newName)) {
           count++;
           newName = baseName + '_' + count;
         }
-  
+
         fetch('/api/projects/add', {
           method: 'POST',
           body: JSON.stringify({
@@ -79,18 +77,27 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
             setAlerted(true)
           }
         })
-  
+
       })
     }
-  
+
     return (
-      <Menu>
-        <MenuHandler>
+      <Menu> 
+          <Tooltip content="Click to copy unique ID" animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+          }}>
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="max-w-[200px] truncate" onClick={() => { navigator.clipboard.writeText(project.projectID) }}>
+              {project.projectID}
+            </Button>
+          </Tooltip>
+          <MenuHandler>
           <Button className='rounded-full w-[52px]' variant="text">
             <EllipsisVerticalIcon className='h-7 w-7 ms-[-12px]' />
           </Button>
         </MenuHandler>
-        <MenuList>
+          <hr className="my-3" />
+          <MenuList className="mt-5">
           <MenuItem onClick={(e) => setOpenEdit(true)}>Edit project</MenuItem>
           <MenuItem>Edit collaborators</MenuItem>
           <MenuItem onClick={duplicateProject}>Duplicate project</MenuItem>
@@ -102,10 +109,10 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
   }
 
   return (
-    <Card className="w-72 lg:w-96 2xl:w-[500px] shadow-none" style={{ background: color }}>
-      
+    <Card className="w-72 lg:w-96 2xl:w-[500px] shadow-none border-gray-300 border-[1px]" style={{ background: color }}>
+
       <EditProjectModal project={project} openEdit={openEdit} setOpenEdit={setOpenEdit} setAlert={setAlert} setAlerted={setAlerted} />
-      
+
       <CardHeader floated={false} color="blue-gray" className="mt-0">
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton
@@ -146,14 +153,14 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         </Typography>
         <>
           {
-            project.users.length == 0 && 
-            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+            project.users.length == 0 &&
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
               <Typography className="font-semibold">No collaborators</Typography>
             </Button>
           }
-          
+
           {project?.users?.map((user) => (
-            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
               <Typography className="font-semibold">{user}</Typography>
             </Button>
           ))}
@@ -166,11 +173,11 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         <div class="group inline-flex flex-wrap items-center gap-3">
           {Object.entries(project.items) == 0
             ?
-            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-3 px-3">No items</Button>
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-3 px-3">No items</Button>
             :
             <>
               {Object.entries(project.items).map(([item, amt]) => (
-                <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
+                <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
                   <Typography className="font-semibold">{amt}</Typography>
                   <Typography className="text-sm">{item}</Typography>
                 </Button>

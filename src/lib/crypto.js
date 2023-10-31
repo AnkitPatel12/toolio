@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs'
 
-export function hashPassword(pass) {
+export function hash(pass) {
     var salt = bcrypt.genSaltSync(10);
     return pass = bcrypt.hashSync(pass, salt);
 }
 
-export function comparePass(pass, hash) {
+export function compareHash(pass, hash) {
     return bcrypt.compareSync(pass, hash); // true
 }

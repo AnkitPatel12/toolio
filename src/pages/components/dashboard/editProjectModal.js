@@ -75,7 +75,7 @@ export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setA
                             <Button variant="gradient" className="me-3"  value="Submit" type="submit">
                                 Edit Project
                             </Button>
-                            <Button variant="gradient" color="red" onClick={handleOpen}>
+                            <Button variant="outlined" color="red" onClick={handleOpen}>
                                 Exit
                             </Button>
                         </CardFooter>

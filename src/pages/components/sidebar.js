@@ -32,11 +32,9 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Router from "next/router";
 import { useRecoilState } from "recoil";
-import { sidebarState } from "../../atoms/sidebarAtom";
 
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
-  const [sidebar, setSidebar] = useRecoilState(sidebarState);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -55,87 +53,49 @@ export function SidebarWithSearch() {
         <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
       </div>
       <List>
-        <Accordion
-          open={sidebar.projectsOpen}
+        <div
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${sidebar.projectsOpen ? "rotate-180" : ""}`}
+              className={`mx-auto h-4 w-4 transition-transform`}
             />
           }
         >
-          <ListItem className="p-0" selected={sidebar.projectsOpen}>
-            <AccordionHeader onClick={() => setSidebar({...sidebar, projectsOpen: !sidebar.projectsOpen})} className="border-b-0 p-3">
+         <Link className="mb-2 flex items-center gap-4" href="/projects">
+          <ListItem className="p-0">
+            <div  className="border-b-0 p-3 flex">
               <ListItemPrefix>
                 <PresentationChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                My Projects
+                Projects
               </Typography>
-            </AccordionHeader>
+            </div>
           </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Analytics
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Reporting
-              </ListItem>
-              <Link className="mb-2 flex items-center gap-4" href="/projects">
-                <ListItem >
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  My Projects
-                </ListItem>
-              </Link>
-
-            </List>
-          </AccordionBody>
-        </Accordion>
-        <Accordion
-          open={sidebar.toolStoreOpen}
+          </Link>
+        </div>
+        <div
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${sidebar.toolStoreOpen ? "rotate-180" : ""}`}
+              className={`mx-auto h-4 w-4 transition-transform`}
             />
           }
         >
-          <ListItem className="p-0" selected={sidebar.toolStoreOpen}>
-            <AccordionHeader onClick={() => setSidebar({...sidebar, toolStoreOpen: !sidebar.toolStoreOpen})} className="border-b-0 p-3">
-              <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                Tool Store
-              </Typography>
-            </AccordionHeader>
-          </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem>
+          <Link className="mb-2 flex items-center gap-4" href="/store">
+
+            <ListItem className="p-0" >
+              <div className="border-b-0 p-3 flex">
                 <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                  <ShoppingBagIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                Orders
-              </ListItem>
-              <ListItem onClick={navigateToProducts}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                    Products
-              </ListItem>
-            </List>
-          </AccordionBody>
-        </Accordion>
+                <Typography color="blue-gray" className="mr-auto font-normal">
+                  Tools
+                </Typography>
+              </div>
+            </ListItem>
+          </Link>
+        </div>
         <hr className="my-2 border-blue-gray-50" />
         <ListItem>
           <ListItemPrefix>

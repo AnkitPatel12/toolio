@@ -6,7 +6,7 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import React from "react";
-import { hashPassword } from "../../../lib/crypto";
+import { hash } from "../../../lib/crypto";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 export function Register() {
@@ -20,7 +20,7 @@ export function Register() {
             body: JSON.stringify({
                 name: formData.get("name"),
                 email: formData.get("email"),
-                password: hashPassword(formData.get("password")),
+                password: hash(formData.get("password")),
                 isAdmin: false
             }),
         }).then(res => res.json())

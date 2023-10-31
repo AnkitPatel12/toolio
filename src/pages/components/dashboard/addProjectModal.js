@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "@material-tailwind/react";
+import { Alert, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
 
 import {
     Button,
@@ -56,31 +56,75 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                 className="bg-transparent shadow-none "
             >
                 <Card className="mx-auto w-[700px]">
-                    <form className="" onSubmit={onSubmit}>
-                        <CardBody className="flex flex-col gap-4">
-                            <div className="flex justify-between items-center">
-                                <h1 className='mt-2'>Create a project</h1>
-                                <Button className='rounded-full w-[50px] h-[50px] mt-[-10px] me-[-10px]' variant="text" onClick={handleOpen}>
-                                    <XMarkIcon className='h-7 w-7 ms-[-13px]' />
-                                </Button>
-                            </div>
-                            {!addRes.success ?
-                                <p className="text-[var(--message-warn)]">{addRes.message}</p>
-                                :
-                                <></>
-                            }
-                            <Input required label="Project Name" type="text" id="projectName" name="projectName" size="lg" />
-                            <Textarea label="Project Description" type="text" id="projectDescription" name="projectDescription" size="lg" />
-                        </CardBody>
-                        <CardFooter className="pt-0">
-                            <Button variant="gradient" className="me-3" value="Submit" type="submit">
+                    <Tabs value="Create Project" className="p-4">
+                        <TabsHeader className="mx-4">
+                            <Tab key="create" value="Create Project">
                                 Create Project
-                            </Button>
-                            <Button variant="gradient" color="red" onClick={handleOpen}>
-                                Exit
-                            </Button>
-                        </CardFooter>
-                    </form>
+                            </Tab>
+                            <Tab key="join" value="Join Project">
+                                Join Project
+                            </Tab>
+                        </TabsHeader>
+                        <TabsBody>
+                            <TabPanel key="create" value="Create Project">
+                                <form className="" onSubmit={onSubmit}>
+                                    <div className="flex flex-col gap-4 mt-4">
+                                        <div className="flex justify-between items-center">
+                                            <h1 >Create a project</h1>
+
+                                            <Button className='rounded-full w-[50px] h-[50px] mt-[-10px] me-[-10px]' variant="text" onClick={handleOpen}>
+                                                <XMarkIcon className='h-7 w-7 ms-[-13px]' />
+                                            </Button>
+                                        </div>
+                                        <Typography color="gray">Start something new by entering your project's info</Typography>
+                                        {!addRes.success ?
+                                            <p className="text-[var(--message-warn)]">{addRes.message}</p>
+                                            :
+                                            <></>
+                                        }
+                                        <Input required label="Project Name" type="text" id="projectName" name="projectName" size="lg" />
+                                        <Textarea label="Project Description" type="text" id="projectDescription" name="projectDescription" size="lg" />
+                                    </div>
+                                    <div className="pt-8">
+                                        <Button variant="gradient" className="me-3" value="Submit" type="submit">
+                                            Create Project
+                                        </Button>
+                                        <Button variant="outlined" color="red" onClick={handleOpen}>
+                                            Exit
+                                        </Button>
+                                    </div>
+                                </form>
+                            </TabPanel>
+                            <TabPanel key="join" value="Join Project">
+                                <form className="" onSubmit={onSubmit}>
+                                    <div className="flex flex-col gap-4 mt-4">
+                                        <div className="flex justify-between items-center">
+                                            <h1 >Join a project</h1>
+
+                                            <Button className='rounded-full w-[50px] h-[50px] mt-[-10px] me-[-10px]' variant="text" onClick={handleOpen}>
+                                                <XMarkIcon className='h-7 w-7 ms-[-13px]' />
+                                            </Button>
+                                        </div>
+                                        <Typography color="gray">Join a project by entering its unique ID</Typography>
+                                        {!addRes.success ?
+                                            <p className="text-[var(--message-warn)]">{addRes.message}</p>
+                                            :
+                                            <></>
+                                        }
+                                        <Input required label="Project ID" type="text" id="projectID" name="projectID" size="lg" />
+                                    </div>
+                                    <div className="pt-8">
+                                        <Button variant="gradient" className="me-3" value="Submit" type="submit">
+                                            Join Project
+                                        </Button>
+                                        <Button variant="outlined" color="red" onClick={handleOpen}>
+                                            Exit
+                                        </Button>
+                                    </div>
+                                </form>
+                            </TabPanel>
+                        </TabsBody>
+                    </Tabs>
                 </Card>
             </Dialog>
         </>

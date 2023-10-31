@@ -1,3 +1,4 @@
+import { hash } from "../../../lib/crypto";
 import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
@@ -24,6 +25,7 @@ export default async function handler(req, res) {
         }
         let project = {
             name: formData.name,
+            projectID: hash(formData.name + formData.email),
             description: formData.description,
             users: [formData.email],
             items: {

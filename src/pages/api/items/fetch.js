@@ -1,20 +1,16 @@
 import clientPromise from "../../../lib/mongodb";
 import Item from "../../../lib/item"
 
-
-
-
-export default async function handler() { 
+export default async function handler(req, res) { 
     const client = await clientPromise;
     let db = client.db("toolioDB");
     const collection = db.collection("items");
 
-    const userDocuments = await collection.find({}).toArray();
+    const items = await collection.find().toArray();
 
-    // Convert user documents to user objects using the constructor
-    const itemsArray = userDocuments.map((userDoc) => {
-      return new Item(formData.name, formData.price, formData.quantity, formData.unit, formData.details, formData.capacity);;
-    });
-
-    return itemsArray;
+    if(items.length == 0) {
+      res.send({ status: 200, success: false, message: "An unknown error occurred"});
+      return;
+    }
+    res.send({ status: 200, success: true, message: items ? "Items retrieved" : "There are no items", items: items});
 }

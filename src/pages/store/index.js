@@ -8,11 +8,12 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import { Alert, Button } from '@material-tailwind/react';
 import { AddProjectModal } from '../components/dashboard/addProjectModal';
 import Loading from '../components/loading';
+import ItemsGrid from '../components/store/itemsGrid';
 
 export default function Projects({ user }) {
 
     const { data: session, status } = useSession();
-    const [projects, setProjects] = React.useState([]);
+    const [items, setItems] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [alert, setAlert] = React.useState({ type: '', message: '' });
     const [alerted, setAlerted] = React.useState(false);
@@ -30,6 +31,7 @@ export default function Projects({ user }) {
             }
         }, []);
         return (
+            <>
                 <>
                     {alert.type === 'success' &&
                         <>
@@ -38,6 +40,10 @@ export default function Projects({ user }) {
                                 color="green"
                                 onClose={() => setOpen(false)}
                                 className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
+                                animate={{
+                                    mount: { y: 0 },
+                                    unmount: { y: 100 },
+                                }}
                             >
                                 {alert.message}
                             </Alert>
@@ -50,26 +56,29 @@ export default function Projects({ user }) {
                                 color="red"
                                 onClose={() => setOpen(false)}
                                 className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
-                                
+                                animate={{
+                                    mount: { y: 0 },
+                                    unmount: { y: 100 },
+                                }}
                             >
                                 {alert.message}
                             </Alert>
                         </>
                     }
                 </>
+            </>
+
         )
     }
     useEffect(() => {
         if (status === 'unauthenticated') { Router.replace('/login'); }
         else {
-            fetch('/api/projects/fetch', {
+            fetch('/api/items/fetch', {
                 method: 'POST',
-                body: JSON.stringify({
-                    email: user.email,
-                }),
+                body: {},
             }).then(res => res.json()).then((response) => {
                 console.log("res")
-                setProjects(response.projects)
+                setItems(response.items)
                 setLoading(false)
                 setAlerted(false)
             })
@@ -78,18 +87,22 @@ export default function Projects({ user }) {
 
     if (status === 'authenticated')
         return (
-            <Layout>         
+            <Layout>
+                
                 <div className='flex justify-between items-center pb-7'>
-                    <h1 className=''>My Projects</h1>
-                    <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} />
+                    <h1 className=''>Tool Marketplace</h1>
+                    {/* <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} /> */}
                 </div>
                 {!loading ?
-                    <ProjectGrid projects={projects} setAlert={setAlert} setAlerted={setAlerted} />
+                    <ItemsGrid items={items} setAlert={setAlert} setAlerted={setAlerted} />
                     :
                     <Loading />
                     
                 }
+
                 <Alerts />
+
+
             </Layout>
         )
 
