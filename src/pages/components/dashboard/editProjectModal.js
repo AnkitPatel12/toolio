@@ -31,7 +31,7 @@ export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setA
             method: 'POST',
             body: JSON.stringify({
                 email: session.user.email,
-                name: project.name,
+                projectID: project.projectID,
                 newName: formData.get("projectName"),
                 description: formData.get("projectDescription"),
                 users: project.users,

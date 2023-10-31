@@ -24,8 +24,7 @@ export default async function handler(req, res) {
         }
 
         let query = {
-            "email": formData.email,
-            "projects.name": formData.name
+            "projects.projectID": formData.projectID
         };
 
         let update = {
@@ -36,7 +35,7 @@ export default async function handler(req, res) {
             }
         };
 
-        let addResponse = await projectCollection.updateOne(query, update, function(err, res) {
+        let addResponse = await projectCollection.updateMany(query, update, function(err, res) {
             if (err) {
                 res.send({ status: 200, success: false, message: "Project not updated" });
                 return;

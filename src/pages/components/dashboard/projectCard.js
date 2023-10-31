@@ -126,7 +126,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         </MenuHandler>
         <MenuList className="mt-5">
           <MenuItem onClick={(e) => setOpenEdit(true)}>Edit project</MenuItem>
-          <MenuItem>Edit collaborators</MenuItem>
+          {/* <MenuItem>Edit collaborators</MenuItem> */}
           <MenuItem onClick={duplicateProject}>Duplicate project</MenuItem>
           <hr className="my-3" />
           <MenuItem className="text-[var(--message-warn)]" onClick={project.users[0] === session.user.email ? deleteProject : leaveProject}>{project.users[0] === session.user.email ? "Delete Project" : "Leave Project"}</MenuItem>
