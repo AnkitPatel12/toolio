@@ -29,12 +29,9 @@ export function Login() {
         {
             email: formData.get("email"),
             password: formData.get("password"),
-            callbackUrl: "/projects",
         })
-
-        // console.log(response)
-
-        // setAddRes({success: response.success, message: response.message})
+        
+        
 
     }
 

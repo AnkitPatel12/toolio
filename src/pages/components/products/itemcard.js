@@ -19,9 +19,6 @@ import {
 import { getColor } from "../../../lib/colors";
 import React from "react";
 import { useSession } from "next-auth/react";
-//import { EditProjectModal } from "./editProjectModal";
-
-
 
 export default function itemCard({ itemCard, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())

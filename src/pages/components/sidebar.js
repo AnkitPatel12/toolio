@@ -45,7 +45,7 @@ export function SidebarWithSearch() {
   };
 
   return (
-    <Card className="h-[calc(100vh)] w-full max-w-[16rem] p-4 shadow-none rounded-none bg-[var(--app-container)]">
+    <Card className="h-[calc(100vh)] w-full max-w-[16rem] p-4 rounded-none bg-[var(--app-container)]">
       <div className="p-4">
         <Logo />
       </div>
@@ -61,7 +61,7 @@ export function SidebarWithSearch() {
             />
           }
         >
-         <Link className="mb-2 flex items-center gap-4" href="/projects">
+         <Link className="flex items-center gap-4" href="/projects">
           <ListItem className="p-0">
             <div  className="border-b-0 p-3 flex">
               <ListItemPrefix>
@@ -82,7 +82,7 @@ export function SidebarWithSearch() {
             />
           }
         >
-          <Link className="mb-2 flex items-center gap-4" href="/store">
+          <Link className="flex items-center gap-4" href="/store">
 
             <ListItem className="p-0" >
               <div className="border-b-0 p-3 flex">
@@ -97,7 +97,7 @@ export function SidebarWithSearch() {
           </Link>
         </div>
         <hr className="my-2 border-blue-gray-50" />
-        <ListItem>
+        {/* <ListItem>
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>
@@ -105,8 +105,8 @@ export function SidebarWithSearch() {
           <ListItemSuffix>
             <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
           </ListItemSuffix>
-        </ListItem>
-        <Link className="mb-2 flex items-center gap-4" href="/profile">
+        </ListItem> */}
+        <Link href="/profile">
         <ListItem>
           <ListItemPrefix>
             <UserCircleIcon className="h-5 w-5" />

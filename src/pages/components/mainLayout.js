@@ -11,11 +11,9 @@ export default function Layout({ children }) {
             <aside className="shrink-0">
                 <SidebarWithSearch />
             </aside>
-            <main className='py-4'>
-                <Card className="h-[calc(100vh-2rem)] w-[calc(100vw-17rem)] min-w-[700px] p-8 rounded-3xl shadow-none overflow-y-scroll">
-                    {children}
-                </Card>
-            </main>
+            <div className="h-full w-full p-8 shadow-none overflow-y-scroll bg-white">
+                {children}
+            </div>
             {/* <Footer /> */}
             <div>
                 {/* Add other routes as needed */}

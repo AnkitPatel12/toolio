@@ -55,7 +55,7 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                 email: session.user.email,
                 itemName: item.name,
                 quantity: formData.get("quantity"),
-                projectName: projectName,
+                projectID: projects.find(project => project.name === projectName).projectID,
                 type: "checkOut",
             }),
         }).then(res => res.json()).then((response) => {
@@ -88,9 +88,6 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                         <CardBody className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">
                                 <h1 className='mt-2'>Check out from {item.name}</h1>
-                                <Button className='rounded-full w-[50px] h-[50px] mt-[-10px] me-[-10px]' variant="text" onClick={handleOpen}>
-                                    <XMarkIcon className='h-7 w-7 ms-[-13px]' />
-                                </Button>
                             </div>
                             {!addRes.success ?
                                 <p className="text-[var(--message-warn)]">{addRes.message}</p>

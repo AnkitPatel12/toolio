@@ -4,17 +4,41 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     let formData = JSON.parse(req.body)
     let db = client.db("toolioDB");
-    const collection = db.collection("projects");
+    let projectCollection = db.collection("projects");
 
-    //check if user already in db
-    let findCursor = await collection.find({email: formData.email})
-    if(findCursor == 0) {
-        res.send({ status: 200, success: false, message: "User does not exist"});
+    let sourceQuery = {
+        "email": formData.email
+    };
+    let userDoc = await projectCollection.findOne(sourceQuery)
+
+    if (!userDoc) {
+        res.send({ status: 200, success: false, message: "User does not exist" });
+        return;
+    }
+    //delete from all users if owner is removing
+    let project = userDoc.projects.find(project => project.projectID === formData.projectID);
+
+    if (project.users[0] === formData.email) {
+        //delete from all users if owner is removing
+        let removeProjectQuery = {
+            "projects.projectID": formData.projectID
+        };
+
+        let removeProjectUpdate = {
+            "$pull": {
+                "projects": {
+                    "projectID": formData.projectID
+                }
+            }
+        };
+
+        let removeFromUser = await projectCollection.updateMany(removeProjectQuery, removeProjectUpdate)
+        res.send({ status: 200, success: removeFromUser.acknowledged, message: removeFromUser.acknowledged ? "Project deleted successfully" : "Project not deleted" });
         return;
     } else {
-        // create new project collection for user
-        let projectCollection = db.collection("projects");
-        let addResponse = await projectCollection.updateOne({email: formData.email}, {$pull: {projects: {name: formData.name}}});
-        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project deleted!" : "Project not deleted"});
+        //delete from current user
+        let addResponse = await projectCollection.updateOne({ email: formData.email }, { $pull: { projects: { name: formData.name } } });
+        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project deleted successfully" : "Project not deleted" });
+        return;
     }
 }

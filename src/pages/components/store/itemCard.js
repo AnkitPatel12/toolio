@@ -13,6 +13,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { CheckOutModal, EditProjectModal } from "./checkOutModal";
 import { CheckInModal } from "./checkInModal";
+import { Tag } from "../tag";
 
 export default function ItemCard({ item, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())
@@ -20,7 +21,7 @@ export default function ItemCard({ item, setAlert, setAlerted }) {
   const [checkOutModal, setCheckOutModal] = React.useState(false);
 
   return (
-    <Card className="max-w-[24rem] overflow-hidden shadow-none border-gray-300 border-[1px]">
+    <Card className="max-w-[24rem] overflow-hidden shadow-lg">
       <CardHeader
         floated={false}
         shadow={false}
@@ -56,16 +57,12 @@ export default function ItemCard({ item, setAlert, setAlerted }) {
             5.0
           </Typography>
         </div>
-        <Typography variant="lead" color="gray" className="mt-3 font-normal">
+        <Typography color="black" className="mb-3">
           {item.description}
         </Typography>
-        <div class="group inline-flex flex-wrap items-center gap-3">
-          <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
-            {item.quantity} of {item.capacity} available
-          </Button>
-          <Button style={{ ml: 6, textTransform: 'inherit' }} variant="outlined" className="flex items-center gap-2 mt-2 bg-[var(--light-font)] rounded-full py-2 px-3">
-            ${item.price} per {item.unit}
-          </Button>
+        <div class="group inline-flex flex-wrap items-center gap-3 pt-2">
+          <Tag content={`${item.quantity} of ${item.capacity} available`} />
+          <Tag content={`${item.price} per ${item.unit}`} />
         </div>
       </CardBody>
       <div className="pt-3 px-6 mb-6 flex">

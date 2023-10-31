@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         }
         let project = {
             name: formData.name,
-            projectID: hash(formData.name + formData.email),
+            projectID: formData.projectID,
             description: formData.description,
             users: [formData.email],
             items: {

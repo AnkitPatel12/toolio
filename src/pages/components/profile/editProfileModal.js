@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import { Alert, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
+import React from "react";
+import { Alert } from "@material-tailwind/react";
+import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
 
 import {
     Button,
@@ -15,33 +16,25 @@ import {
     Option,
     Textarea,
 } from "@material-tailwind/react";
-import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { CheckIcon, PaintBrushIcon, PlusIcon, WrenchIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 import { hash } from "../../../lib/crypto";
 
-export function AddProjectModal({ setAlert, setAlerted }) {
-    const [open, setOpen] = React.useState(false);
+export function EditProfileModal({ user, setAlert, setAlerted }) {
     const { data: session, status } = useSession();
     const [addRes, setAddRes] = React.useState({ success: true, message: null });
-    const [projectName, setProjectName] = React.useState('');
-    const [projectID, setProjectID] = React.useState('');
+    const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
 
-    useEffect(() => {
-        setProjectID(hash(session.user.name + projectName));
-    }, [projectName]);
-
-    async function onSubmitNewProject(event) {
+    async function onInfoSubmit(event) {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        await fetch('/api/projects/add', {
+        await fetch('/api/users/edit', {
             method: 'POST',
             body: JSON.stringify({
-                email: session.user.email,
-                projectID: formData.get("projectID"),
-                name: formData.get("projectName"),
-                description: formData.get("projectDescription"),
+                newName: formData.get('name'),
+                email: user.email,
             }),
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
@@ -53,15 +46,15 @@ export function AddProjectModal({ setAlert, setAlerted }) {
         })
     }
 
-    async function onSubmitJoinProject(event) {
+    async function onPasswordChangeSubmit(event) {
         event.preventDefault()
-
         const formData = new FormData(event.currentTarget)
-        await fetch('/api/projects/join', {
+        await fetch('/api/users/resetpassword', {
             method: 'POST',
             body: JSON.stringify({
-                userToAdd: session.user.email,
-                projectID: formData.get("projectID"),
+                oldPassword: formData.get("oldPassword"),
+                newPassword: hash(formData.get("newPassword")),
+                email: formData.get('email'),
             }),
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
@@ -76,7 +69,7 @@ export function AddProjectModal({ setAlert, setAlerted }) {
     return (
         <>
             <Button className='rounded-full w-[52px] shadow-none' onClick={handleOpen}>
-                <PlusIcon className='h-7 w-7 ms-[-12px]' />
+                <WrenchIcon className='h-7 w-7 ms-[-12px]' />
             </Button>
             <Dialog
                 open={open}
@@ -84,23 +77,23 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                 className="bg-transparent shadow-none "
             >
                 <Card className="mx-auto w-[700px]">
-                    <Tabs value="Create Project" className="p-4">
+                    <Tabs value="My Info" className="p-4">
                         <TabsHeader className="mx-4">
-                            <Tab key="create" value="Create Project">
-                                Create Project
+                            <Tab key="info" value="My Info">
+                                My Info
                             </Tab>
-                            <Tab key="join" value="Join Project">
-                                Join Project
+                            <Tab key="password" value="Reset Password">
+                                Reset Password
                             </Tab>
                         </TabsHeader>
                         <TabsBody>
-                            <TabPanel key="create" value="Create Project">
-                                <form className="" onSubmit={onSubmitNewProject}>
-                                    <CardBody className="flex flex-col gap-4 mt-4">
+                            <TabPanel key="info" value="My Info">
+                                <form className="" onSubmit={onInfoSubmit}>
+                                    <CardBody className="flex flex-col gap-4">
                                         <div className="flex justify-between items-center">
-                                            <h1 >Create a project</h1>
+                                            <h1 className='mt-2'>Edit Profile</h1>
+                                           
                                         </div>
-                                        <Typography color="gray">Start something new by entering your project's info</Typography>
                                         {!addRes.success ?
                                             <p className="text-[var(--message-warn)]">{addRes.message}</p>
                                             :
@@ -111,44 +104,27 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                                             color="blue-gray"
                                             className="font-medium mb-[-10px]"
                                         >
-                                            Project Name
+                                            User Name
                                         </Typography>
-                                        <Input required label="Project Name" type="text" id="projectName" name="projectName" size="lg" onChange={(e) => setProjectName(e.target.value)}/>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-medium mb-[-10px]"
-                                        >
-                                            Project Description
-                                        </Typography>
-                                        <Textarea label="Project Description" type="text" id="projectDescription" name="projectDescription" size="lg" className="mb-[-5px]" />
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-medium mb-[-10px]"
-                                        >
-                                            Generated Unique ID
-                                        </Typography>
-                                        <Input required label="projectID" type="text" id="projectID" name="projectID" size="lg" value={projectID} />
+                                        <Input required label="User Name" type="text" id="name" name="name" size="lg" defaultValue={user.name} />
                                     </CardBody>
-                                    <div className="pt-8">
+                                    <CardFooter className="pt-0 flex flex-row ">
                                         <Button variant="gradient" className="me-3" value="Submit" type="submit">
-                                            Create Project
+                                            Confirm
                                         </Button>
                                         <Button variant="outlined" color="red" onClick={handleOpen}>
                                             Exit
                                         </Button>
-                                    </div>
+                                    </CardFooter>
                                 </form>
                             </TabPanel>
-                            <TabPanel key="join" value="Join Project">
-                                <form className="" onSubmit={onSubmitJoinProject}>
-                                    <CardBody className="flex flex-col gap-4 mt-4">
+                            <TabPanel key="password" value="Reset Password">
+                                <form className="" onSubmit={onPasswordChangeSubmit}>
+                                    <CardBody className="flex flex-col gap-4">
                                         <div className="flex justify-between items-center">
-                                            <h1 >Join a project</h1>
-
+                                            <h1 className='mt-2'>Reset Password</h1>
+                                       
                                         </div>
-                                        <Typography color="gray">Join a project by entering its unique ID</Typography>
                                         {!addRes.success ?
                                             <p className="text-[var(--message-warn)]">{addRes.message}</p>
                                             :
@@ -159,18 +135,26 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                                             color="blue-gray"
                                             className="font-medium mb-[-10px]"
                                         >
-                                            Unique Project ID
+                                            Old password
                                         </Typography>
-                                        <Input required label="Project ID" type="text" id="projectID" name="projectID" size="lg" />
+                                        <Input required label="Old password" type="text" id="oldPassword" name="oldPassword" size="lg"/>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-medium mb-[-10px]"
+                                        >
+                                            New password
+                                        </Typography>
+                                        <Input required label="New password" type="text" id="newPassword" name="newPassword" size="lg" />
                                     </CardBody>
-                                    <div className="pt-8">
+                                    <CardFooter className="pt-0 flex flex-row ">
                                         <Button variant="gradient" className="me-3" value="Submit" type="submit">
-                                            Join Project
+                                            Confirm
                                         </Button>
                                         <Button variant="outlined" color="red" onClick={handleOpen}>
                                             Exit
                                         </Button>
-                                    </div>
+                                    </CardFooter>
                                 </form>
                             </TabPanel>
                         </TabsBody>

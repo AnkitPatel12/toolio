@@ -80,17 +80,16 @@ export default function Projects({ user }) {
                 console.log("res")
                 setItems(response.items)
                 setLoading(false)
-                setAlerted(false)
             })
         }
-    }, [alerted]);
+    }, [alert]);
 
     if (status === 'authenticated')
         return (
             <Layout>
                 
                 <div className='flex justify-between items-center pb-7'>
-                    <h1 className=''>Tool Marketplace</h1>
+                    <h1 className='pt-2'>Tool Marketplace</h1>
                     {/* <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} /> */}
                 </div>
                 {!loading ?

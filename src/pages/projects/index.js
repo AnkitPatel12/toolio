@@ -71,16 +71,15 @@ export default function Projects({ user }) {
                 console.log("res")
                 setProjects(response.projects)
                 setLoading(false)
-                setAlerted(false)
             })
         }
-    }, [alerted]);
+    }, [alert]);
 
     if (status === 'authenticated')
         return (
             <Layout>         
                 <div className='flex justify-between items-center pb-7'>
-                    <h1 className=''>My Projects</h1>
+                    <h1 className=''>{session.user.name === '' ? session.user.email : session.user.name}'s Projects</h1>
                     <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} />
                 </div>
                 {!loading ?

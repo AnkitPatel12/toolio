@@ -1,6 +1,4 @@
-import { alert } from "@material-tailwind/react";
 import clientPromise from "../../../lib/mongodb";
-import React from "react";
 
 export default async function handler(req, res) {
     const client = await clientPromise;
@@ -11,8 +9,8 @@ export default async function handler(req, res) {
     let itemCollection = db.collection("items");
     let item = await itemCollection.findOne({ "name": formData.itemName })
     let projectCollection = db.collection("projects");
-    let userDoc = await projectCollection.findOne({ "email": formData.email, "projects.name": formData.projectName })
-    let project = userDoc.projects.find((project) => project.name === formData.projectName);
+    let userDoc = await projectCollection.findOne({ "email": formData.email, "projects.projectID": formData.projectID })
+    let project = userDoc.projects.find((project) => project.projectID === formData.projectID);
 
     if (!project) {
         res.send({ status: 200, success: false, message: "The project does not exist" });
@@ -51,15 +49,13 @@ export default async function handler(req, res) {
     }; 
 
     let projectQuery = {
-        "email": formData.email,
-        "projects.name": formData.projectName
+        "projects.projectID": formData.projectID
     };
 
     let projectUpdate = {};
+    let projectItemAmt = formData.itemName in project.items ? project.items[formData.itemName] : 0
 
-    
-
-    if(project.items[formData.itemName] + formData.quantity * (formData.type === "checkOut" ? 1 : -1) === 0){
+    if(projectItemAmt + formData.quantity * (formData.type === "checkOut" ? 1 : -1) === 0){
         projectUpdate = {
             "$unset": {
                 ["projects.$.items." + formData.itemName]: "",
@@ -68,7 +64,7 @@ export default async function handler(req, res) {
     } else {
         projectUpdate = {
             "$set": {
-                ["projects.$.items." + formData.itemName]: project.items[formData.itemName] + formData.quantity * (formData.type === "checkOut" ? 1 : -1),
+                ["projects.$.items." + formData.itemName]: projectItemAmt  + formData.quantity * (formData.type === "checkOut" ? 1 : -1),
             }
         };
     }
@@ -81,7 +77,7 @@ export default async function handler(req, res) {
     });
 
     //update project
-    await projectCollection.updateOne(projectQuery, projectUpdate, function (err, res) {
+    await projectCollection.updateMany(projectQuery, projectUpdate, function (err, res) {
         console.log()
         if (err) {
             res.send({ status: 200, success: false, message: "Error updating project quantity" });
