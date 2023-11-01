@@ -1,8 +1,7 @@
 import { Card } from "@material-tailwind/react"
-import { Login } from "../components/login/login"
 import React from "react"
 import Footer from "../components/footer"
-import { CubeTransparentIcon } from "@heroicons/react/24/outline"
+import { Login } from "../components/login/login"
 import LogoLarge from "../components/logoLarge"
 
 export default function SignIn({ csrfToken }) {

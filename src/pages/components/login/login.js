@@ -1,14 +1,13 @@
 import {
+    Button,
     Card,
     Input,
-    Checkbox,
-    Button,
-    Typography,
+    Typography
 } from "@material-tailwind/react";
-import React, { useEffect } from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import Router from "next/router";
+import React, { useEffect } from "react";
 
 // fix login encrypt and decrypt
 
@@ -30,9 +29,6 @@ export function Login() {
             email: formData.get("email"),
             password: formData.get("password"),
         })
-        
-        
-
     }
 
     return (

@@ -1,4 +1,3 @@
-import { hash } from "../../../lib/crypto";
 import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
@@ -32,6 +31,6 @@ export default async function handler(req, res) {
             }
         }
         let addResponse = await projectCollection.updateOne({ email: formData.email }, { $push: { projects: project } });
-        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project added!" : "Project not added" });
+        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project added successfully" : "Project not added" });
     }
 }

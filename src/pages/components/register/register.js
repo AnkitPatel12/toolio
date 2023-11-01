@@ -1,14 +1,14 @@
 import {
-    Card,
-    Input,
-    Checkbox,
     Button,
+    Card,
+    Checkbox,
+    Input,
     Typography,
 } from "@material-tailwind/react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import { hash } from "../../../lib/crypto";
-import Link from "next/link";
-import { signIn } from "next-auth/react";
 export function Register() {
     const [addRes, setAddRes] = React.useState({success: true, message: null});
     async function onSubmit(event) {

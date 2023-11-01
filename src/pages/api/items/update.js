@@ -78,7 +78,6 @@ export default async function handler(req, res) {
 
     //update project
     await projectCollection.updateMany(projectQuery, projectUpdate, function (err, res) {
-        console.log()
         if (err) {
             res.send({ status: 200, success: false, message: "Error updating project quantity" });
             return;
@@ -86,7 +85,7 @@ export default async function handler(req, res) {
     });
     res.send({
         status: 200, success: true, message:
-            (formData.type === "checkOut" ? `Checked out ${formData.quantity} from ${formData.itemName} to ${formData.projectName}` : `Successfully checked in ${formData.quantity} of ${formData.itemName} from ${formData.projectName}`)
+            (formData.type === "checkOut" ? `Checked out ${formData.quantity} from ${formData.itemName} to ${project.name}` : `Successfully checked in ${formData.quantity} of ${formData.itemName} from ${project.name}`)
     });
 
 }

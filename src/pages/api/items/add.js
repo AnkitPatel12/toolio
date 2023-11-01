@@ -1,5 +1,5 @@
+import Item from "../../../lib/item";
 import clientPromise from "../../../lib/mongodb";
-import Item from "../../../lib/item"
 
 export default async function handler(req, res) {
     const client = await clientPromise;

@@ -1,21 +1,16 @@
+import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
 import React, { useEffect } from "react";
-import { Alert, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
 
+import { PlusIcon } from '@heroicons/react/24/solid';
 import {
     Button,
-    Dialog,
     Card,
-    CardHeader,
     CardBody,
-    CardFooter,
-    Typography,
+    Dialog,
     Input,
-    Checkbox,
-    Select,
-    Option,
     Textarea,
+    Typography
 } from "@material-tailwind/react";
-import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 import { hash } from "../../../lib/crypto";
 

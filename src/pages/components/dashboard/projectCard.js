@@ -1,26 +1,26 @@
-import { Cog8ToothIcon, CogIcon, EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
   Button,
-  Tooltip,
+  Card,
+  CardBody,
+  CardHeader,
   IconButton,
+  Tooltip,
+  Typography
 } from "@material-tailwind/react";
 
 import {
   Menu,
   MenuHandler,
-  MenuList,
   MenuItem,
+  MenuList,
 } from "@material-tailwind/react";
-import { getColor } from "../../../lib/colors";
-import React from "react";
 import { useSession } from "next-auth/react";
-import { EditProjectModal } from "./editProjectModal";
+import React from "react";
+import { getColor } from "../../../lib/colors";
+import { hash } from "../../../lib/crypto";
 import { Tag } from "../tag";
+import { EditProjectModal } from "./editProjectModal";
 
 export default function ProjectCard({ project, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())
@@ -92,6 +92,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
             email: session.user.email,
             name: newName,
             description: project.description,
+            projectID: hash(session.user.name + newName),
           }),
         }).then(res => res.json()).then((response) => {
           if (response.success) {
@@ -136,7 +137,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
   }
 
   return (
-    <Card className={`w-72 lg:w-96 2xl:w-[500px] shadow-lg`} style={{ background: color}}>
+    <Card className={`w-[100%] 2xl:w-[31%] shadow-lg`} style={{ background: color}}>
 
       <EditProjectModal project={project} openEdit={openEdit} setOpenEdit={setOpenEdit} setAlert={setAlert} setAlerted={setAlerted} />
 
@@ -179,7 +180,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
 
         
 
-        <Typography color="black" className="pt-4 pb-2 font-semibold">
+        <Typography color="black" className="pt-4 pb-1 font-semibold">
           Collaborators
         </Typography>
         <div className="group inline-flex flex-wrap items-center gap-1">
@@ -193,8 +194,8 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
 
         </div>
 
-        <Typography color="black" className="pt-4 pb-2 font-semibold">
-          Project items
+        <Typography color="black" className="pt-4 pb-1 font-semibold">
+          Items
         </Typography>
         <div className="group inline-flex flex-wrap items-center gap-2">
           {Object.entries(project.items) == 0

@@ -1,8 +1,8 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
 
 import { ThemeProvider } from "@material-tailwind/react";
-import { DM_Sans } from 'next/font/google'
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react";
+import { DM_Sans } from 'next/font/google';
 import { RecoilRoot } from 'recoil';
 const dm = DM_Sans({
   weight: ['300', '400', '500'],

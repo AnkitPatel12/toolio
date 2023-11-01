@@ -1,37 +1,24 @@
-import React from "react";
+import {
+  ChevronDownIcon
+} from "@heroicons/react/24/outline";
+import {
+  PowerIcon,
+  PresentationChartBarIcon,
+  ShoppingBagIcon,
+  UserCircleIcon
+} from "@heroicons/react/24/solid";
 import {
   Card,
-  Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Alert,
-  Input,
+  Typography
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  CubeTransparentIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import Logo from "./logo";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Router from "next/router";
-import { useRecoilState } from "recoil";
+import React from "react";
+import Logo from "./logo";
 
 export function SidebarWithSearch() {
   const [open, setOpen] = React.useState(0);
@@ -49,9 +36,9 @@ export function SidebarWithSearch() {
       <div className="p-4">
         <Logo />
       </div>
-      <div className="p-2">
+      {/* <div className="p-2">
         <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
-      </div>
+      </div> */}
       <List>
         <div
           icon={
@@ -114,12 +101,12 @@ export function SidebarWithSearch() {
           Profile
         </ListItem>
         </Link>
-        <ListItem>
+        {/* <ListItem>
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />
           </ListItemPrefix>
           Settings
-        </ListItem>
+        </ListItem> */}
         <ListItem onClick={(event) => { signOut() }}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />

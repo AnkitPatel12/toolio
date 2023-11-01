@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
     let addResponse = await projectCollection.updateOne(targetQuery, pushProject)
     if (addResponse.acknowledged) {
-        res.send({ status: 200, success: true, message: `Successfully joined ${projectToCopy.name}` });
+        res.send({ status: 200, success: true, message: `Successfully joined ${projectToCopy.name}`});
         return;
     }
     

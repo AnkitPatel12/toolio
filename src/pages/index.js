@@ -1,14 +1,12 @@
-import Head from "next/head";
 import Hero from "./components/landing/hero";
 import NavbarDefault from "./components/landing/navbar";
 import SectionTitle from "./components/landing/sectionTitle";
 
-import { benefitOne, benefitTwo } from "./components/landing/data";
-import Benefits from "./components/landing/benefits";
 import Footer from "./components/footer";
+import Benefits from "./components/landing/benefits";
 import Cta from "./components/landing/cta";
+import { benefitOne } from "./components/landing/data";
 import Faq from "./components/landing/faq";
-import { useSession, signIn, signOut } from "next-auth/react"
 
 const Home = () => {
   return (

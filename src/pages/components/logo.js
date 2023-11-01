@@ -1,7 +1,7 @@
-import { Typography } from "@material-tailwind/react";
 import {
-    CubeTransparentIcon,
-  } from "@heroicons/react/24/outline";
+  CubeTransparentIcon,
+} from "@heroicons/react/24/outline";
+import { Typography } from "@material-tailwind/react";
 import Link from "next/link";
 
 export default function Logo() {

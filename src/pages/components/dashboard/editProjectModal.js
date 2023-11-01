@@ -1,21 +1,15 @@
 import React from "react";
-import { Alert } from "@material-tailwind/react";
 
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import {
     Button,
-    Dialog,
     Card,
-    CardHeader,
     CardBody,
     CardFooter,
-    Typography,
+    Dialog,
     Input,
-    Checkbox,
-    Select,
-    Option,
-    Textarea,
+    Textarea
 } from "@material-tailwind/react";
-import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 
 export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setAlerted }) {
@@ -32,6 +26,7 @@ export function EditProjectModal({project, openEdit, setOpenEdit, setAlert, setA
             body: JSON.stringify({
                 email: session.user.email,
                 projectID: project.projectID,
+                name: project.name,
                 newName: formData.get("projectName"),
                 description: formData.get("projectDescription"),
                 users: project.users,

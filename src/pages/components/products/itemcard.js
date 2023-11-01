@@ -1,24 +1,19 @@
-import { Cog8ToothIcon, CogIcon, EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
   Button,
-  Tooltip,
+  Card,
+  CardBody,
+  CardHeader,
   IconButton,
-} from "@material-tailwind/react";
-import Link from "next/link";
-import {
   Menu,
   MenuHandler,
-  MenuList,
   MenuItem,
+  MenuList,
+  Typography
 } from "@material-tailwind/react";
-import { getColor } from "../../../lib/colors";
-import React from "react";
 import { useSession } from "next-auth/react";
+import React from "react";
+import { getColor } from "../../../lib/colors";
 
 export default function itemCard({ itemCard, setAlert, setAlerted }) {
   const [color, setColor] = React.useState(getColor())

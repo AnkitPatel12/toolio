@@ -24,13 +24,7 @@ export default async function handler(req, res) {
             "projects.projectID": formData.projectID
         };
 
-        let removeProjectUpdate = {
-            "$pull": {
-                "projects": {
-                    "projectID": formData.projectID
-                }
-            }
-        };
+        let removeProjectUpdate = { $pull: { projects: { projectID: formData.projectID } } }
 
         let removeFromUser = await projectCollection.updateMany(removeProjectQuery, removeProjectUpdate)
         res.send({ status: 200, success: removeFromUser.acknowledged, message: removeFromUser.acknowledged ? "Project deleted successfully" : "Project not deleted" });

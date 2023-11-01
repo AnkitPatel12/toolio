@@ -1,5 +1,4 @@
 import { SidebarWithSearch } from './sidebar'
-import { Card } from '@material-tailwind/react'
 
 // import Footer from './footer'
 

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import Layout from '../components/mainLayout';
-import { getSession } from 'next-auth/react';
-import Loading from '../components/loading';
-import { Tag } from '../components/tag';
-import { useSession, signIn, signOut } from 'next-auth/react'
 import { Alert } from '@material-tailwind/react';
+import { getSession, useSession } from 'next-auth/react';
+import React, { useEffect } from 'react';
+import Loading from '../components/loading';
+import Layout from '../components/mainLayout';
 import { EditProfileModal } from '../components/profile/editProfileModal';
+import { Tag } from '../components/tag';
 
 export default function Profile({user}) {
     const { data: session, status } = useSession();
@@ -13,6 +12,7 @@ export default function Profile({user}) {
     const [loading, setLoading] = React.useState(true);
     const [alert, setAlert] = React.useState({ type: '', message: '' });
     const [alerted, setAlerted] = React.useState(false);
+
     function Alerts() {
         const [open, setOpen] = React.useState(true);
 
@@ -26,24 +26,6 @@ export default function Profile({user}) {
                 clearTimeout(timeId)
             }
         }, []);
-
-        useEffect(() => {
-            if (status === 'unauthenticated') { Router.replace('/login'); }
-            else {
-                fetch('/api/projects/fetch', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        email: user.email,
-                    }),
-                }).then(res => res.json()).then((response) => {
-                    console.log("res")
-                    setProjects(response.projects)
-                    setLoading(false)
-                })
-            }
-        }, []);
-    
-    if (status === 'authenticated')
         return (
                 <>
                     {alert.type === 'success' &&
@@ -73,10 +55,22 @@ export default function Profile({user}) {
                     }
                 </>
         )
-    
-        return <div></div>
     }
-
+    useEffect(() => {
+        if (status === 'unauthenticated') { Router.replace('/login'); }
+        else {
+            fetch('/api/projects/fetch', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: user.email,
+                }),
+            }).then(res => res.json()).then((response) => {
+                setProjects(response.projects)
+                setLoading(false)
+            })
+        }
+    }, [alert]);
+    if (status === 'authenticated')
     return (
         <Layout>
             <div className='flex justify-between items-center pb-7'>
@@ -97,7 +91,9 @@ export default function Profile({user}) {
             }
             <Alerts />
         </Layout>
-    );
+    )
+
+    return <div></div>
 }
 
 export async function getServerSideProps(context) {

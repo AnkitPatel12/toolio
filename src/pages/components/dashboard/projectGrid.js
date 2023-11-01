@@ -1,7 +1,6 @@
 import ProjectCard from './projectCard';
 
 export default function ProjectGrid({ projects, setAlert, setAlerted }) {
-    console.log(projects)
     return (
         <div className="flex flex-row gap-7 flex-wrap">
             {projects.length === 0 ?

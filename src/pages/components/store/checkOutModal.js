@@ -1,21 +1,16 @@
+import { DialogHeader } from "@material-tailwind/react";
 import React, { useEffect } from "react";
-import { Alert, DialogHeader } from "@material-tailwind/react";
 
 import {
     Button,
-    Dialog,
     Card,
-    CardHeader,
     CardBody,
     CardFooter,
-    Typography,
-    Input,
-    Checkbox,
-    Select,
+    Dialog,
     Option,
-    Textarea,
+    Select,
+    Typography
 } from "@material-tailwind/react";
-import { CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 import Loading from "../loading";
 
@@ -35,7 +30,6 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                 email: session.user.email,
             }),
         }).then(res => res.json()).then((response) => {
-            console.log("res")
             setProjects(response.projects)
             setLoading(false)
         })

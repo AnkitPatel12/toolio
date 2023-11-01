@@ -1,7 +1,7 @@
-import React from "react";
-import Container from "../container";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
+import React from "react";
+import Container from "../container";
 
 const Cta = () => {
   return (

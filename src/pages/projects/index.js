@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import Layout from '../components/mainLayout'
-import ProjectGrid from '../components/dashboard/projectGrid';
-import Router from 'next/router';
 import { getSession } from 'next-auth/react';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
+import ProjectGrid from '../components/dashboard/projectGrid';
+import Layout from '../components/mainLayout';
 
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { Alert, Button } from '@material-tailwind/react';
+import { Alert } from '@material-tailwind/react';
+import { useSession } from 'next-auth/react';
 import { AddProjectModal } from '../components/dashboard/addProjectModal';
 import Loading from '../components/loading';
 
@@ -17,12 +17,10 @@ export default function Projects({ user }) {
     const [alert, setAlert] = React.useState({ type: '', message: '' });
     const [alerted, setAlerted] = React.useState(false);
     function Alerts() {
-        const [open, setOpen] = React.useState(true);
-
         useEffect(() => {
             const timeId = setTimeout(() => {
                 // After 3 seconds set the show value to false
-                setOpen(false)
+                setAlerted(false)
             }, 5000)
 
             return () => {
@@ -34,9 +32,9 @@ export default function Projects({ user }) {
                     {alert.type === 'success' &&
                         <>
                             <Alert
-                                open={open}
+                                open={alerted}
                                 color="green"
-                                onClose={() => setOpen(false)}
+                                onClose={() => setAlerted(false)}
                                 className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
                             >
                                 {alert.message}
@@ -46,9 +44,9 @@ export default function Projects({ user }) {
                     {alert.type === 'fail' &&
                         <>
                             <Alert
-                                open={open}
+                                open={alerted}
                                 color="red"
-                                onClose={() => setOpen(false)}
+                                onClose={() => setAlerted(false)}
                                 className="font-medium text-white fixed bottom-8 w-[calc(100vw-22rem)] min-w-[700px]"
                                 
                             >
@@ -68,7 +66,6 @@ export default function Projects({ user }) {
                     email: user.email,
                 }),
             }).then(res => res.json()).then((response) => {
-                console.log("res")
                 setProjects(response.projects)
                 setLoading(false)
             })

@@ -1,14 +1,14 @@
-import React from "react";
 import {
-  Navbar,
-  MobileNav,
-  Typography,
   Button,
   IconButton,
+  MobileNav,
+  Navbar,
+  Typography,
 } from "@material-tailwind/react";
-import Logo from "../logo";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useSession } from "next-auth/react"
+import React from "react";
+import Logo from "../logo";
 
 export default function NavbarDefault() {
   const [openNav, setOpenNav] = React.useState(false);

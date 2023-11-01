@@ -1,22 +1,16 @@
-import React from "react";
-import { Alert } from "@material-tailwind/react";
 import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
+import React from "react";
 
+import { PencilIcon } from '@heroicons/react/24/solid';
 import {
     Button,
-    Dialog,
     Card,
-    CardHeader,
     CardBody,
     CardFooter,
-    Typography,
+    Dialog,
     Input,
-    Checkbox,
-    Select,
-    Option,
-    Textarea,
+    Typography
 } from "@material-tailwind/react";
-import { CheckIcon, PaintBrushIcon, PlusIcon, WrenchIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 import { hash } from "../../../lib/crypto";
 
@@ -54,7 +48,7 @@ export function EditProfileModal({ user, setAlert, setAlerted }) {
             body: JSON.stringify({
                 oldPassword: formData.get("oldPassword"),
                 newPassword: hash(formData.get("newPassword")),
-                email: formData.get('email'),
+                email: user.email,
             }),
         }).then(res => res.json()).then((response) => {
             setAddRes({ success: response.success, message: response.message })
@@ -68,8 +62,8 @@ export function EditProfileModal({ user, setAlert, setAlerted }) {
 
     return (
         <>
-            <Button className='rounded-full w-[52px] shadow-none' onClick={handleOpen}>
-                <WrenchIcon className='h-7 w-7 ms-[-12px]' />
+            <Button className='rounded-full w-[52px] h-[52px] shadow-none' onClick={handleOpen}>
+                <PencilIcon className='h-5 w-5 ms-[-8px]' />
             </Button>
             <Dialog
                 open={open}

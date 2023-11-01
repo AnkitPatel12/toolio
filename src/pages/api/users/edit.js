@@ -1,4 +1,3 @@
-import User from "../../../lib/user"
 import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
@@ -23,5 +22,5 @@ export default async function handler(req, res) {
             return;
         }
     });
-    res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "User info updated!" : "User info not updated" });
+    res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "User info updated. Changes will be reflected after logging out" : "User info not updated" });
 }

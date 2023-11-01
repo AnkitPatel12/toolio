@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import Layout from '../components/mainLayout'
-import itemGrid from '../components/products/itemgrid';
-import Router from 'next/router';
 import { getSession } from 'next-auth/react';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
+import Layout from '../components/mainLayout';
 
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { Alert, Button } from '@material-tailwind/react';
+import { Alert } from '@material-tailwind/react';
+import { useSession } from 'next-auth/react';
 import { AddProjectModal } from '../components/dashboard/addProjectModal';
 import Loading from '../components/loading';
 
@@ -78,7 +77,6 @@ export default function Projects({ user }) {
                     email: user.email,
                 }),
             }).then(res => res.json()).then((response) => {
-                console.log("res")
                 setProjects(response.projects)
                 setLoading(false)
                 setAlerted(false)

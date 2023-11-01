@@ -1,4 +1,4 @@
-import User from "../../../lib/user"
+import { compareHash } from "../../../lib/crypto";
 import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     const userCollection = db.collection("users");
 
     let findCursor = await userCollection.findOne({email: formData.email})
+    console.log(formData.email)
     if(findCursor && compareHash(formData.oldPassword, findCursor.password)) {
         //change password
         await userCollection.updateOne({email: formData.email}, {$set: {password: formData.newPassword}})

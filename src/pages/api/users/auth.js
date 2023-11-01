@@ -1,5 +1,5 @@
-import clientPromise from "../../../lib/mongodb";
 import { compareHash } from "../../../lib/crypto";
+import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
     const client = await clientPromise;

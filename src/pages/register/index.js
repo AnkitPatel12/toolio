@@ -1,8 +1,8 @@
 import { Card } from "@material-tailwind/react"
-import { Register } from "../components/register/register"
 import React from "react"
 import Footer from "../components/footer"
 import LogoLarge from "../components/logoLarge"
+import { Register } from "../components/register/register"
 
 export default function RegisterScreen() {
     return (

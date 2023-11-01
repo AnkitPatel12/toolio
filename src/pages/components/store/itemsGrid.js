@@ -1,5 +1,4 @@
 import ItemCard from './itemCard';
-import ProjectCard from './itemCard';
 
 export default function ItemsGrid({ items, setAlert, setAlerted }) {
     return (

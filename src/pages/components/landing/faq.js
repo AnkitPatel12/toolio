@@ -1,9 +1,7 @@
+import { Disclosure } from '@headlessui/react';
+import { ChevronUpIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import Container from "../container";
-import { Typography } from "@material-tailwind/react";
-import { Button, Collapse, CardBody, Card } from "@material-tailwind/react"
-import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon } from "@heroicons/react/24/solid";
 
 const Faq = () => {
   const [open, setOpen] = React.useState(false);

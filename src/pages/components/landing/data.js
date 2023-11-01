@@ -1,14 +1,10 @@
 import {
-    FaceSmileIcon,
-    ChartBarSquareIcon,
-    CursorArrowRaysIcon,
-    DevicePhoneMobileIcon,
-    AdjustmentsHorizontalIcon,
-    SunIcon,
-  } from "@heroicons/react/24/solid";
+  ChartBarSquareIcon,
+  CursorArrowRaysIcon,
+  FaceSmileIcon
+} from "@heroicons/react/24/solid";
   
   import colorful_ribbon2 from "../../../../public/img/colorful_ribbon2.png";
-  import benefitTwoImg from "../../../../public/img/benefit-two.png";
   
   const benefitOne = {
     title: "Let's build the future together",
@@ -34,4 +30,4 @@ import {
   };
   
   
-  export {benefitOne};
+  export { benefitOne };

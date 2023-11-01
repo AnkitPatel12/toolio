@@ -1,5 +1,4 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-import { DM_Sans } from 'next/font/google'
+import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (

@@ -41,6 +41,6 @@ export default async function handler(req, res) {
                 return;
             }
         });
-        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project updated!" : "Project not updated" });
+        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "Project updated successfully" : "Project not updated" });
     }
 }

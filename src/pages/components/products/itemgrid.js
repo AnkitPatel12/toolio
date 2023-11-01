@@ -1,7 +1,5 @@
-import itemCard from './itemcard.js';
 
 export default function ProjectGrid({ items }) {
-    console.log(items)
     return (
         <div className="flex flex-row gap-4 flex-wrap">
             {projects.length === 0 ?
