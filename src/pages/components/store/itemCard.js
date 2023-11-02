@@ -12,7 +12,7 @@ import { CheckOutModal } from "./checkOutModal";
 
 export default function ItemCard({ item, setAlert, setAlerted }) {
   return (
-    <Card className=" w-[100%] xl:w-[26rem] overflow-hidden shadow-lg">
+    <Card className="w-[100%] lg:w-[47%] xl:w-[31%] overflow-hidden shadow-lg">
       <CardHeader
         floated={false}
         shadow={false}
