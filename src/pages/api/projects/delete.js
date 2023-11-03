@@ -26,6 +26,14 @@ export default async function handler(req, res) {
 
         let removeProjectUpdate = { $pull: { projects: { projectID: formData.projectID } } }
 
+        //if project is deleted, not left, check in all items from project
+        let itemCollection = db.collection("items");
+        Object.entries(project.items).forEach(([name, quantity]) => {
+            let checkInQuery = {"name": name}
+            let checkInUpdate = { $inc: { "quantity": quantity } }
+            itemCollection.updateOne(checkInQuery, checkInUpdate);
+        })
+
         let removeFromUser = await projectCollection.updateMany(removeProjectQuery, removeProjectUpdate)
         res.send({ status: 200, success: removeFromUser.acknowledged, message: removeFromUser.acknowledged ? "Project deleted successfully" : "Project not deleted" });
         return;

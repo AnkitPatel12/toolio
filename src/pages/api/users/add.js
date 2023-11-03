@@ -1,3 +1,4 @@
+import { hash } from "../../../lib/crypto";
 import clientPromise from "../../../lib/mongodb";
 import User from "../../../lib/user";
 
@@ -25,6 +26,7 @@ export default async function handler(req, res) {
             projects: [{
                 name: "Example Project",
                 description: "This is an example project!",
+                projectID: hash(formData.email + "Example Project"),
                 users : [formData.email],
                 items: {
                 }

@@ -109,19 +109,23 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
 
     return (
       <Menu> 
+        {project.projectID !== "" ?
           <Tooltip content="Click to copy unique ID" animate={{
             mount: { scale: 1, y: 0 },
             unmount: { scale: 0, y: 25 },
           }}>
-            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="max-w-[150px] truncate mt-[-35px] me-[20px]" onClick={() => { navigator.clipboard.writeText(project.projectID) }}>
+            <Button style={{ ml: 6, textTransform: 'inherit' }} variant="text" className="max-w-[150px] h-[50px] truncate mt-[-35px] me-[27px]" onClick={() => { navigator.clipboard.writeText(project.projectID) }}>
               {project.projectID}
             </Button>
           </Tooltip>
+          : 
+          <> </>
+        }
         <MenuHandler>
           <div className="absolute end-1 top-1">
 
-          <Button className='rounded-full w-[55px]' variant="text">
-            <EllipsisVerticalIcon className='h-8 w-8 ms-[-13px]' />
+          <Button className='rounded-lg w-[40px] h-[50px]' variant="text">
+            <EllipsisVerticalIcon className='h-8 w-8 ms-[-15px] mt-[-3px]' />
           </Button>
           </div>
         </MenuHandler>
