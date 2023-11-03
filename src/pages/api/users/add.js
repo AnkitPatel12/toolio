@@ -10,10 +10,10 @@ export default async function handler(req, res) {
     const collection = db.collection("users");
 
     //check if user already in db
-    let findCursor = await collection.find({email: formData.email})
+    let findCursor = await collection.find({ email: formData.email })
     let findResponse = await findCursor.toArray()
-    if(findResponse.length > 0) {
-        res.send({ status: 200, success: false, message: "User already exists"});
+    if (findResponse.length > 0) {
+        res.send({ status: 200, success: false, message: "User already exists" });
         return;
     } else {
         // insert user
@@ -27,12 +27,12 @@ export default async function handler(req, res) {
                 name: "Example Project",
                 description: "This is an example project!",
                 projectID: hash(formData.email + "Example Project"),
-                users : [formData.email],
+                users: [formData.email],
                 items: {
                 }
             }]
         }
         let addProjectResponse = await projectCollection.insertOne(project);
-        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "User added successfully" : "User not added"});
+        res.send({ status: 200, success: addResponse.acknowledged, message: addResponse.acknowledged ? "User added successfully" : "User not added" });
     }
 }

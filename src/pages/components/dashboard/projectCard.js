@@ -98,7 +98,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
           if (response.success) {
             setAlert({ type: 'success', message: response.message })
             setAlerted(true)
-          }  else {
+          } else {
             setAlert({ type: 'fail', message: response.message })
             setAlerted(true)
           }
@@ -108,7 +108,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
     }
 
     return (
-      <Menu> 
+      <Menu>
         {project.projectID !== "" ?
           <Tooltip content="Click to copy unique ID" animate={{
             mount: { scale: 1, y: 0 },
@@ -118,15 +118,15 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
               {project.projectID}
             </Button>
           </Tooltip>
-          : 
+          :
           <> </>
         }
         <MenuHandler>
           <div className="absolute end-1 top-1">
 
-          <Button className='rounded-lg w-[40px] h-[50px]' variant="text">
-            <EllipsisVerticalIcon className='h-8 w-8 ms-[-15px] mt-[-3px]' />
-          </Button>
+            <Button className='rounded-lg w-[40px] h-[50px]' variant="text">
+              <EllipsisVerticalIcon className='h-8 w-8 ms-[-15px] mt-[-3px]' />
+            </Button>
           </div>
         </MenuHandler>
         <MenuList className="mt-5">
@@ -141,7 +141,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
   }
 
   return (
-    <Card className={`w-[100%] 2xl:w-[31%] shadow-lg`} style={{ background: color}}>
+    <Card className={`w-[100%] 2xl:w-[31%] shadow-lg`} style={{ background: color }}>
 
       <EditProjectModal project={project} openEdit={openEdit} setOpenEdit={setOpenEdit} setAlert={setAlert} setAlerted={setAlerted} />
 
@@ -169,7 +169,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
             {project.name}
             <p className="text-sm rounded-full">Owned by {project.users[0]}</p>
           </Typography>
-          
+
           <Typography
             color="blue-gray"
             className="flex items-center gap-1.5 font-normal"
@@ -182,7 +182,7 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
           {project.description == "" ? "No description" : project.description}
         </Typography>
 
-        
+
 
         <Typography color="black" className="pt-4 pb-1 font-semibold">
           Collaborators
@@ -190,10 +190,10 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         <div className="group inline-flex flex-wrap items-center gap-1">
           {
             project.users.length == 0 &&
-<Tag content="No collaborators"/>          }
+            <Tag content="No collaborators" />}
 
           {project?.users?.map((user) => (
-            <Tag content={user}/>
+            <Tag content={user} />
           ))}
 
         </div>
@@ -204,11 +204,11 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
         <div className="group inline-flex flex-wrap items-center gap-2">
           {Object.entries(project.items) == 0
             ?
-            <Tag content="No items"/>
+            <Tag content="No items" />
             :
             <>
               {Object.entries(project.items).map(([item, amt]) => (
-                <Tag content={`${amt} ${item}`}/>
+                <Tag content={`${amt} ${item}`} />
               ))}
 
             </>

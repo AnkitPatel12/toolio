@@ -29,7 +29,7 @@ export default async function handler(req, res) {
         //if project is deleted, not left, check in all items from project
         let itemCollection = db.collection("items");
         Object.entries(project.items).forEach(([name, quantity]) => {
-            let checkInQuery = {"name": name}
+            let checkInQuery = { "name": name }
             let checkInUpdate = { $inc: { "quantity": quantity } }
             itemCollection.updateOne(checkInQuery, checkInUpdate);
         })
