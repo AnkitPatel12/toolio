@@ -77,7 +77,7 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                 </DialogHeader>
 
                 <Card className="mx-auto w-[700px]">
-                    <img src={item.image} className=" h-[300px] rounded-t-xl object-cover" />
+                    <img alt="Item" src={item.image} className=" h-[300px] rounded-t-xl object-cover" />
                     <form className="" onSubmit={onSubmit}>
                         <CardBody className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">

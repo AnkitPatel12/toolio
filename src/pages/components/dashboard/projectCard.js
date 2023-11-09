@@ -192,8 +192,8 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
             project.users.length == 0 &&
             <Tag content="No collaborators" />}
 
-          {project?.users?.map((user) => (
-            <Tag content={user} />
+          {project?.users?.map((user, index) => (
+            <Tag key={index} content={user} />
           ))}
 
         </div>
@@ -207,8 +207,8 @@ export default function ProjectCard({ project, setAlert, setAlerted }) {
             <Tag content="No items" />
             :
             <>
-              {Object.entries(project.items).map(([item, amt]) => (
-                <Tag content={`${amt} ${item}`} />
+              {Object.entries(project.items).map(([item, amt], index) => (
+                <Tag key={index} content={`${amt} ${item}`} />
               ))}
 
             </>
