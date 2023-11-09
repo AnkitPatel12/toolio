@@ -95,7 +95,7 @@ export function AddProjectModal({ setAlert, setAlerted }) {
                                         <div className="flex justify-between items-center">
                                             <h1 >Create a project</h1>
                                         </div>
-                                        <Typography color="gray">Start something new by entering your project's info</Typography>
+                                        <Typography color="gray">Start something new by entering your project&apos;s info</Typography>
                                         {!addRes.success ?
                                             <p className="text-[var(--message-warn)]">{addRes.message}</p>
                                             :

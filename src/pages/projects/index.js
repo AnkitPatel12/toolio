@@ -76,7 +76,7 @@ export default function Projects({ user }) {
         return (
             <Layout>         
                 <div className='flex justify-between items-center pb-7'>
-                    <h1 className=''>{session.user.name === '' ? session.user.email : session.user.name}'s Projects</h1>
+                    <h1 className=''>{session.user.name === '' ? session.user.email : session.user.name}&apos;s Projects</h1>
                     <AddProjectModal setAlert={setAlert} setAlerted={setAlerted} />
                 </div>
                 {!loading ?
