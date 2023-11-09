@@ -2,7 +2,6 @@
 
 ![](https://github.com/AnkitPatel12/toolio/blob/main/public/assets/toolio.gif)
 
-### Highlights:
 Toolio is a lightweight project management tool for developers, allowing users to add tools to their projects and track their progress. Users can also add other users to their projects and assign them tasks.
 
 ### Highlights:
