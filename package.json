@@ -16,7 +16,6 @@
     "@types/react-auth-kit": "^1.2.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "crypto-js": "^4.1.1",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "mongodb": "^6.1.0",
@@ -24,9 +23,7 @@
     "next-auth": "^4.23.2",
     "next-connect": "^0.12.1",
     "react": "latest",
-    "react-dom": "latest",
-    "react-perfect-scrollbar": "^1.5.8",
-    "recoil": "^0.7.7"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@types/react": "18.2.27",
