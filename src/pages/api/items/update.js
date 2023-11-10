@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     let itemCollection = db.collection("items");
     let item = await itemCollection.findOne({ "name": formData.itemName })
     let projectCollection = db.collection("projects");
-    let userDoc = await projectCollection.findOne({ "email": formData.email, "projects.projectID": formData.projectID })
+    let userDoc = await projectCollection.findOne({ "email": formData.email })
     let project = userDoc.projects.find((project) => project.projectID === formData.projectID);
 
     if (!project) {
@@ -36,7 +36,6 @@ export default async function handler(req, res) {
             return;
         }
     }
-
 
     let itemQuery = {
         "name": formData.itemName

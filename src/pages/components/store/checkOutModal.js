@@ -20,7 +20,7 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
     const [addRes, setAddRes] = React.useState({ success: true, message: null });
     const [projects, setProjects] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
-    const [projectName, setProjectName] = React.useState();
+    const [selectedProjectID, setSelectedProjectID] = React.useState();
     const handleOpen = () => setOpen((cur) => !cur);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                 email: session.user.email,
                 itemName: item.name,
                 quantity: formData.get("quantity"),
-                projectID: projects.find(project => project.name === projectName).projectID,
+                projectID: selectedProjectID,
                 type: "checkOut",
             }),
         }).then(res => res.json()).then((response) => {
@@ -117,7 +117,7 @@ export function CheckOutModal({ item, setAlert, setAlerted }) {
                                         <div className="w-72 flex-col ">
                                             <Select label="Select Project" id="projectName" name="projectName" disabled={projects.length == 0}>
                                                 {projects.map((project) => (
-                                                    <Option key={project.name} onClick={() => setProjectName(project.name)}>{project.name}</Option>
+                                                    <Option key={project.projectID} onClick={() => setSelectedProjectID(project.projectID)}>{project.name} owned by {project.users[0]}</Option>
                                                 ))}
                                             </Select>
                                         </div>
